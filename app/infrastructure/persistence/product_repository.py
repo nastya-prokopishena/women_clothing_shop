@@ -1,28 +1,39 @@
 from typing import Optional, List
 from app.domain.models.product import Product
-import json
+from app.extensions import mongo  # Імпортуємо mongo екземпляр
+from decimal import Decimal
 
 
 class ProductRepository:
-    def __init__(self, data_file: str = "products.json"):
-        self.data_file = data_file
-        self.products = self._load_products()
+    def __init__(self):
+        self.collection = mongo.db.products  # Назва колекції
 
-    def _load_products(self) -> List[Product]:
-        """Завантаження продуктів з JSON файлу"""
-        try:
-            with open(self.data_file, 'r') as f:
-                data = json.load(f)
-                return [Product(**item) for item in data]
-        except FileNotFoundError:
-            return []
+    def _document_to_product(self, doc: dict) -> Product:
+        """Конвертує документ з MongoDB у Product"""
+        return Product(
+            id=str(doc['_id']),
+            name=doc['name'],
+            description=doc.get('description', ''),
+            price=Decimal(str(doc['price'])),
+            sizes=doc.get('sizes', []),
+            colors=doc.get('colors', []),
+            images=doc.get('images', []),
+            category=doc['category'],
+            sku=doc['sku']
+        )
 
     def get_product_by_id(self, product_id: str) -> Optional[Product]:
         """Знайти продукт по ID"""
-        return next((p for p in self.products if p.id == product_id), None)
+        doc = self.collection.find_one({'_id': product_id})
+        if doc:
+            return self._document_to_product(doc)
+        return None
 
     def get_related_products(self, category: str, exclude_id: str) -> List[Product]:
         """Отримати схожі продукти"""
-        return [p for p in self.products
-                if p.category == category
-                and p.id != exclude_id][:4]
+        docs = self.collection.find({
+            'category': category,
+            '_id': {'$ne': exclude_id}
+        }).limit(4)
+
+        return [self._document_to_product(doc) for doc in docs]
