@@ -1,0 +1,29 @@
+<h1>{{ product.name }}</h1>
+<p>{{ product.description }}</p>
+<p>Ціна: {{ product.price }} грн</p>
+
+<form method="post" action="/cart/add">
+  <label for="size">Розмір:</label>
+  <select name="size" required>
+    {% for size in product.sizes %}
+      <option>{{ size }}</option>
+    {% endfor %}
+  </select>
+
+  <label for="color">Колір:</label>
+  <select name="color" required>
+    {% for color in product.colors %}
+      <option>{{ color }}</option>
+    {% endfor %}
+  </select>
+
+  <input type="hidden" name="product_id" value="{{ product.id }}">
+  <button type="submit">Додати в кошик</button>
+</form>
+
+<h2>Схожі товари</h2>
+<ul>
+  {% for p in related_products %}
+    <li><a href="{{ url_for('product.product_page', product_id=p.id) }}">{{ p.name }}</a></li>
+  {% endfor %}
+</ul>
