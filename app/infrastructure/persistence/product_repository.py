@@ -1,39 +1,43 @@
-from typing import Optional, List
-from app.domain.models.product import Product
-from app.extensions import mongo  # Імпортуємо mongo екземпляр
-from decimal import Decimal
+from app.domain.models import Product, ProductAttribute
+from app.extensions import mongo
+from bson import ObjectId
 
 
 class ProductRepository:
     def __init__(self):
-        self.collection = mongo.db.products  # Назва колекції
+        self.collection = mongo.db.products
 
-    def _document_to_product(self, doc: dict) -> Product:
-        """Конвертує документ з MongoDB у Product"""
-        return Product(
-            id=str(doc['_id']),
-            name=doc['name'],
-            description=doc.get('description', ''),
-            price=Decimal(str(doc['price'])),
-            sizes=doc.get('sizes', []),
-            colors=doc.get('colors', []),
-            images=doc.get('images', []),
-            category=doc['category'],
-            sku=doc['sku']
+    def _ensure_collection(self):
+        """Перевіряє наявність колекції"""
+        if self.collection is None:
+            raise Exception("Products collection not initialized")
+
+    def find_featured(self, limit=8):
+        self._ensure_collection()
+        products_data = list(self.collection.find({'is_featured': True}).limit(limit))
+        return [self._map_to_product(p) for p in products_data]
+
+    def find_new_arrivals(self, limit=8):
+        self._ensure_collection()
+        products_data = list(self.collection.find({'is_new': True}).limit(limit))
+        return [self._map_to_product(p) for p in products_data]
+
+    def _map_to_product(self, data):
+        attributes = ProductAttribute(
+            colors=data['attributes']['colors'],
+            sizes=data['attributes']['sizes'],
+            material=data['attributes'].get('material')
         )
-
-    def get_product_by_id(self, product_id: str) -> Optional[Product]:
-        """Знайти продукт по ID"""
-        doc = self.collection.find_one({'_id': product_id})
-        if doc:
-            return self._document_to_product(doc)
-        return None
-
-    def get_related_products(self, category: str, exclude_id: str) -> List[Product]:
-        """Отримати схожі продукти"""
-        docs = self.collection.find({
-            'category': category,
-            '_id': {'$ne': exclude_id}
-        }).limit(4)
-
-        return [self._document_to_product(doc) for doc in docs]
+        return Product(
+            name=data['name'],
+            description=data['description'],
+            price=data['price'],
+            categories=data['categories'],
+            attributes=attributes,
+            images=data['images'],
+            stock=data['stock'],
+            tags=data['tags'],
+            sale_price=data.get('sale_price'),
+            rating=data.get('rating', 0.0),
+            reviews_count=data.get('reviews_count', 0)
+        )

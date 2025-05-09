@@ -5,17 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9094745e-b464-441a-b31f-9557980d8914" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/web/templates/product.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/women_clothing_shop.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/women_clothing_shop.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/application/services/home_page_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/application/services/home_page_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/domain/models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/domain/models/cart.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/cart.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/domain/models/category.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/category.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/domain/models/coupon.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/coupon.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/domain/models/order.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/order.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/domain/models/product.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/product.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/domain/patterns/factory_method.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/patterns/factory_method.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/domain/models/review.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/review.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/domain/models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/infrastructure/persistence/product_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/infrastructure/persistence/product_repository.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/web/routes/product.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/web/routes/product.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/infrastructure/persistence/review_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/infrastructure/persistence/review_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/infrastructure/persistence/user_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/infrastructure/persistence/user_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/web/routes/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/web/routes/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/web/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/web/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/conftest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_user.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +39,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -38,6 +52,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python tests.Python tests in test_user.py.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.run.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -51,6 +68,29 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="QodanaHighlightedReportService">
+    <option name="localRunNotPublishedPersistedInfo">
+      <LocalReportPersistedInfo>
+        <option name="path" value="C:\Users\anast\AppData\Local\Temp\qodana_output\qodana.sarif.json" />
+        <option name="reportGuid" value="c8bfaea1-5911-40a2-9191-183fd156d54a" />
+        <option name="reportName" value="women_clothing_shop/qodana/2025-05-09" />
+      </LocalReportPersistedInfo>
+    </option>
+  </component>
+  <component name="QodanaIsSelectedPersistenceService">
+    <option name="selectedOrLoading" value="true" />
+  </component>
+  <component name="QodanaReportsService">
+    <option name="descriptions">
+      <ReportDescription localRun="true" path="C:\Users\anast\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="c8bfaea1-5911-40a2-9191-183fd156d54a" reportId="women_clothing_shop/qodana/2025-05-09" />
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\anast\OneDrive\Робочий стіл\women_clothing_shop\app\web\templates\main" />
+      <recent name="C:\Users\anast\OneDrive\Робочий стіл\women_clothing_shop\app\infrastructure\persistence" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -72,5 +112,27 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/app/__init__.py</url>
+          <line>13</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
