@@ -3,8 +3,8 @@ from app.application.services.home_page_service import HomePageService
 
 
 def init_main_routes(app):
-    @app.route('/')
-    def home():
+    @app.route('/', endpoint='home')
+    def home_page():
         service = HomePageService()
         data = service.get_home_page_data()
 
@@ -15,7 +15,7 @@ def init_main_routes(app):
             {'icon': 'fa-credit-card', 'title': 'Безпечна оплата', 'text': 'Різні способи оплати'}
         ]
 
-        return render_template('main/index.html',
+        return render_template('index.html',
                                featured_products=data['featured_products'],
                                new_arrivals=data['new_arrivals'],
                                categories=data['featured_categories'],

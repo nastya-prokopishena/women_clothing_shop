@@ -1,13 +1,17 @@
 from flask import Flask
 from app.config import Config
 from app.extensions import mongo
+import os
 from urllib.parse import quote_plus
 from pymongo.errors import ConnectionFailure, OperationFailure
 import sys
 
 
 def create_app():
-    app = Flask(__name__, template_folder='app/web/templates')
+    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+    TEMPLATE_DIR = os.path.join(BASE_DIR, 'web', 'templates')
+
+    app = Flask(__name__, template_folder=TEMPLATE_DIR)
     app.config.from_object(Config)
 
     print("\n=== Initializing MongoDB Connection ===")

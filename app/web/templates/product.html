@@ -1,29 +1,73 @@
-<h1>{{ product.name }}</h1>
-<p>{{ product.description }}</p>
-<p>Ціна: {{ product.price }} грн</p>
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ product.name }}</title>
+    <link rel="stylesheet" href="app/web/static/css/product.css">
+</head>
+<body>
+    <!-- Головна секція -->
+    <div class="product-container">
+        <!-- Галерея зображень -->
+        <div class="product-gallery">
+            {% for image in product.images %}
+                <img src="{{ image }}" alt="{{ product.name }}">
+            {% endfor %}
+        </div>
 
-<form method="post" action="/cart/add">
-  <label for="size">Розмір:</label>
-  <select name="size" required>
-    {% for size in product.sizes %}
-      <option>{{ size }}</option>
-    {% endfor %}
-  </select>
+        <!-- Інформація про товар -->
+        <div class="product-info">
+            <h1>{{ product.name }}</h1>
 
-  <label for="color">Колір:</label>
-  <select name="color" required>
-    {% for color in product.colors %}
-      <option>{{ color }}</option>
-    {% endfor %}
-  </select>
+            <!-- Ціна -->
+            <div class="price-section">
+                <span class="price">{{ product.price }} грн</span>
+            </div>
 
-  <input type="hidden" name="product_id" value="{{ product.id }}">
-  <button type="submit">Додати в кошик</button>
-</form>
+            <!-- Атрибути -->
+            <div class="attributes">
+                <div class="colors">
+                    <span>Кольори:</span>
+                    {% for color in product.attributes.colors %}
+                        <div class="color-box" style="background-color: {{ color }}"></div>
+                    {% endfor %}
+                </div>
 
-<h2>Схожі товари</h2>
-<ul>
-  {% for p in related_products %}
-    <li><a href="{{ url_for('product.product_page', product_id=p.id) }}">{{ p.name }}</a></li>
-  {% endfor %}
-</ul>
+                <div class="sizes">
+                    <span>Розміри:</span>
+                    {% for size in product.attributes.sizes %}
+                        <button class="size-button">{{ size }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Кнопка додавання в кошик -->
+            <button class="add-to-cart">Додати в кошик</button>
+
+            <!-- Опис -->
+            <div class="description">
+                <h3>Опис товару</h3>
+                <p>{{ product.description }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Схожі товари -->
+    {% if related_products %}
+        <div class="related-products">
+            <h2>Рекомендовані товари</h2>
+            <div class="related-grid">
+                {% for product in related_products %}
+                    <div class="related-item">
+                        <img src="{{ product.images[0] }}" alt="{{ product.name }}">
+                        <h3>{{ product.name }}</h3>
+                        <p>{{ product.price }} грн</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <script src="/static/js/product.js"></script>
+</body>
+</html>

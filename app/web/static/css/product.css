@@ -1,0 +1,24 @@
+.product-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.color-box {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin: 5px;
+    border: 1px solid #ddd;
+}
+
+.sale-price {
+    color: #e74c3c;
+    font-size: 1.5em;
+}
+
+.related-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}

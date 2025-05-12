@@ -1,6 +1,7 @@
 from app.domain.models import Product, ProductAttribute
 from app.extensions import mongo
 from bson import ObjectId
+from typing import Optional
 
 
 class ProductRepository:
@@ -22,6 +23,26 @@ class ProductRepository:
         products_data = list(self.collection.find({'is_new': True}).limit(limit))
         return [self._map_to_product(p) for p in products_data]
 
+    def get_product_by_id(self, product_id: str) -> Optional[Product]:
+        """Отримати продукт за ID"""
+        self._ensure_collection()
+        try:
+            data = self.collection.find_one({'_id': ObjectId(product_id)})
+        except Exception:
+            return None
+        if data:
+            return self._map_to_product(data)
+        return None
+
+    def get_related_products(self, categories: str, exclude_id: str, limit: int = 4) -> list[Product]:
+        """Отримати товари з тієї ж категорії, окрім переданого ID"""
+        self._ensure_collection()
+        products_data = self.collection.find({
+            'categories': categories,
+            '_id': {'$ne': exclude_id}
+        }).limit(limit)
+        return [self._map_to_product(p) for p in products_data]
+
     def _map_to_product(self, data):
         attributes = ProductAttribute(
             colors=data['attributes']['colors'],
@@ -36,8 +57,5 @@ class ProductRepository:
             attributes=attributes,
             images=data['images'],
             stock=data['stock'],
-            tags=data['tags'],
-            sale_price=data.get('sale_price'),
-            rating=data.get('rating', 0.0),
-            reviews_count=data.get('reviews_count', 0)
+            product_id=str(data['_id'])
         )
