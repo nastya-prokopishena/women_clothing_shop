@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="catalog">
+    <!-- Меню категорій -->
+    <nav class="categories-menu">
+        <ul>
+            <li><a href="{{ url_for('catalog_all') }}" {% if not category %}class="active"{% endif %}>ВСЕ</a></li>
+            {% for cat in categories %}
+                <li>
+                    <a href="{{ url_for('category', slug=cat.slug) }}" {% if category and cat.slug == category.slug %}class="active"{% endif %}>
+                        {{ cat.name }} ({{ cat.products|length if cat.products else 0 }})
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+
+    <!-- Список товарів -->
+    <div class="products-grid">
+        {% if products %}
+            {% for product in products %}
+                <div class="product-card">
+                    <img src="{{ product.images[0] if product.images else '/static/images/placeholder.jpg' }}" alt="{{ product.name }}">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.price }} грн</p>
+                    <button class="favorite-btn">♥</button>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Товарів поки немає.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

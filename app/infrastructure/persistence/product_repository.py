@@ -18,6 +18,11 @@ class ProductRepository:
         products_data = list(self.collection.find({'is_featured': True}).limit(limit))
         return [self._map_to_product(p) for p in products_data]
 
+    def find_all(self):
+        self._ensure_collection()
+        products_data = list(self.collection.find())
+        return [self._map_to_product(p) for p in products_data]
+
     def find_new_arrivals(self, limit=8):
         self._ensure_collection()
         products_data = list(self.collection.find({'is_new': True}).limit(limit))
@@ -33,6 +38,10 @@ class ProductRepository:
         if data:
             return self._map_to_product(data)
         return None
+
+    def find_by_category(self, category_id):
+        products_data = list(self.collection.find({'category_id': ObjectId(category_id)}))
+        return [self._map_to_product(p) for p in products_data]
 
     def get_related_products(self, categories: str, exclude_id: str, limit: int = 4) -> list[Product]:
         """Отримати товари з тієї ж категорії, окрім переданого ID"""

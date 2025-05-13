@@ -18,6 +18,7 @@ header {
     width: 100%;
     z-index: 1000;
     backdrop-filter: blur(5px);
+
 }
 
 .navbar {
@@ -152,6 +153,11 @@ header {
     background: rgba(255, 255, 255, 0.95);
 }
 
+.catalog {
+    position: relative;
+    top: 60px;
+}
+
 /* Категорії */
 .categories {
     text-align: center;
@@ -183,6 +189,54 @@ header {
 .category-card:hover {
     transform: translateY(-5px);
 }
+.catalog {
+    margin-top: 0px;
+}
+.categories-menu {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: white;
+    width: 100%;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.categories-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.categories-menu li {
+    margin: 0;
+}
+
+.categories-menu li a {
+    text-decoration: none;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    transition: color 0.3s ease;
+}
+
+.categories-menu li a:hover {
+    color: #7c6f64;
+}
+
+.categories-menu li a.active {
+    color: #7c6f64;
+    border-bottom: 2px solid #7c6f64;
+}
+
 
 /* Продукти */
 .featured-products {

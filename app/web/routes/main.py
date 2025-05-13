@@ -1,7 +1,7 @@
 from flask import render_template, abort
 from app.application.services.home_page_service import HomePageService
 from app.infrastructure.persistence.category_repository import CategoryRepository
-
+from app.infrastructure.persistence.product_repository import ProductRepository
 def init_main_routes(app):
     @app.route('/', endpoint='home')
     def home_page():
@@ -22,11 +22,31 @@ def init_main_routes(app):
                                reviews=data['recent_reviews'],
                                benefits=benefits)
 
-    @app.route('/category/<slug>', endpoint='category')
+    @app.route('/catalog', endpoint='catalog_all')
+    def catalog_all():
+        category_repo = CategoryRepository()
+        product_repo = ProductRepository()
+        all_categories = category_repo.find_all_with_counts()  # Використовуємо новий метод
+        all_products = product_repo.find_all()
+
+        return render_template('catalog.html',
+                               category=None,
+                               categories=all_categories,
+                               products=all_products)
+
+    @app.route('/catalog/<slug>', endpoint='category')  # Змінив шлях для консистентності
     def category_page(slug):
         category_repo = CategoryRepository()
-        category_data = category_repo.collection.find_one({'slug': slug})
-        if not category_data:
+        product_repo = ProductRepository()
+        all_categories = category_repo.find_all_with_counts()  # Використовуємо новий метод
+
+        category = category_repo.find_by_slug(slug)
+        if not category:
             abort(404)
-        category = category_repo._map_to_category(category_data)
-        return render_template('category.html', category=category)
+
+        products = product_repo.find_by_category(category.id)
+
+        return render_template('catalog.html',
+                               category=category,
+                               categories=all_categories,
+                               products=products)
