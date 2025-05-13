@@ -4,12 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Магазин жіночого одягу{% endblock %}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <header>
-        <!-- Навігаційне меню -->
+        <nav class="navbar">
+            <div class="navbar-content">
+                <div class="logo">
+                    <a href="">Жіночий Стиль</a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Головна</a></li>
+                    <li><a href="shop.html">Магазин</a></li>
+                    <li><a href="index.html#about">Про нас</a></li>
+                    <li><a href="#footer">Контакти</a></li>
+                    <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Кошик</a></li>
+                </ul>
+            </div>
+        </nav>
     </header>
 
     <main>
@@ -19,7 +31,14 @@
     </main>
 
     <footer>
-        <!-- Підвал сайту -->
+        <div class="footer-content" id="footer">
+            <p>&copy; 2025 Жіночий Стиль. Всі права захищено.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
     </footer>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>

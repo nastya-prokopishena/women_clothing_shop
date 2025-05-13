@@ -13,7 +13,6 @@ class CategoryRepository:
 
     def _map_to_category(self, data):
         return Category(
-            id=str(data['_id']),
             name=data['name'],
             slug=data['slug'],
             parent_id=str(data['parent_id']) if data.get('parent_id') else None,

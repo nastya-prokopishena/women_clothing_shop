@@ -1,0 +1,276 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f7f4;
+    color: #333;
+}
+
+/* Хедер */
+header {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px 40px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.navbar {
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.logo {
+    margin: 0;
+}
+
+.logo a {
+    font-family: 'Georgia', serif;
+    font-size: 20px;
+    text-decoration: none;
+    color: #333;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+}
+
+
+.nav-links li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s;
+    padding: 5px 8px;
+
+}
+
+.nav-links li a:hover {
+    color: #7c6f64;
+}
+
+
+/* Банер */
+.hero {
+    position: relative;
+    text-align: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.hero-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+}
+
+/* Відео */
+.background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.8) contrast(1.1) saturate(0.8);
+}
+
+.hero-video-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(255, 244, 234, 0.3), rgba(255, 244, 234, 0.5));
+    z-index: 1;
+    pointer-events: none;
+}
+
+.content-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    color: #333;
+}
+
+.overlay-text {
+    font-family: 'Georgia', serif;
+    font-size: 2rem;
+    line-height: 1.5;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.cta-button {
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #333;
+    border-radius: 5px;
+}
+
+.cta-button a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.cta-button:hover {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Категорії */
+.categories {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.categories-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.category-card {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+.category-card a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s;
+    padding: 5px 8px;
+}
+.category-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Продукти */
+.featured-products {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+    padding: 0 20px;
+}
+
+.product-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.product-card h3 {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.price {
+    color: #7c6f64;
+    font-weight: bold;
+}
+
+/* Відгуки */
+.reviews {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.reviews-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.review-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 250px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Переваги */
+.advantages {
+    text-align: center;
+    padding: 40px 20px;
+    background: #fff;
+}
+
+.advantages ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0 0;
+}
+
+.advantages li {
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+/* Футер */
+footer {
+    background: #fff;
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid #eee;
+}
+
+.social-icons a {
+    margin: 0 10px;
+    color: #333;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.social-icons a:hover {
+    color: #7c6f64;
+}
+

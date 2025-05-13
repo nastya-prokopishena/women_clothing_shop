@@ -1,20 +1,70 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="hero">
-    <!-- Вміст головної сторінки -->
-    <h1>Ласкаво просимо до нашого магазину</h1>
+<section class="hero" id=about>
+    <div class="hero-video-container">
+        <video autoplay muted loop playsinline class="background-video">
+            <source src="{{ url_for('static', filename='video/4006-176282263_medium.mp4') }}" type="video/mp4">
+            Ваш браузер не підтримує відео.
+        </video>
+        <div class="content-overlay">
+            <div class="overlay-text">
+                <h2>Just be like a wave,<br>and everything will be easier</h2>
+            </div>
+            <div class="cta-button">
+                <a href="#">До каталогу</a>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <!-- Featured Products -->
+<!-- Категорії -->
+<section class="categories">
+    <h2>Категорії</h2>
+    <div class="categories-grid">
+        {% for category in categories %}
+            <div class="category-card">
+                <a href="/category/{{ category.slug }}">{{ category.name }}</a>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Хіти продажів -->
+<section class="featured-products">
+    <h2>Хіти продажів</h2>
     <div class="products-grid">
         {% for product in featured_products %}
         <div class="product-card">
-            <img src="{{ product.images[0] if product.images else url_for('static', filename='images/placeholder.jpg') }}"
-                 alt="{{ product.name }}">
             <h3>{{ product.name }}</h3>
             <p class="price">{{ product.price }} грн</p>
         </div>
         {% endfor %}
     </div>
+</section>
+
+<!-- Відгуки клієнтів -->
+<section class="reviews">
+    <h2>Відгуки наших клієнтів</h2>
+    <div class="reviews-grid">
+        <div class="review-card">
+            <p>"Дуже задоволена якістю одягу! Швидка доставка!"</p>
+            <strong>- Олена</strong>
+        </div>
+        <div class="review-card">
+            <p>"Купую вже втретє. Рекомендую!"</p>
+            <strong>- Наталя</strong>
+        </div>
+    </div>
+</section>
+
+<!-- Переваги магазину -->
+<section class="advantages">
+    <h2>Наші переваги</h2>
+    <ul>
+        <li>Безкоштовна доставка від 1500 грн</li>
+        <li>Обмін та повернення протягом 14 днів</li>
+        <li>Гарантія якості на весь асортимент</li>
+    </ul>
 </section>
 {% endblock %}

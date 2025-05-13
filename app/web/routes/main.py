@@ -1,6 +1,6 @@
-from flask import render_template
+from flask import render_template, abort
 from app.application.services.home_page_service import HomePageService
-
+from app.infrastructure.persistence.category_repository import CategoryRepository
 
 def init_main_routes(app):
     @app.route('/', endpoint='home')
@@ -21,3 +21,12 @@ def init_main_routes(app):
                                categories=data['featured_categories'],
                                reviews=data['recent_reviews'],
                                benefits=benefits)
+
+    @app.route('/category/<slug>', endpoint='category')
+    def category_page(slug):
+        category_repo = CategoryRepository()
+        category_data = category_repo.collection.find_one({'slug': slug})
+        if not category_data:
+            abort(404)
+        category = category_repo._map_to_category(category_data)
+        return render_template('category.html', category=category)
