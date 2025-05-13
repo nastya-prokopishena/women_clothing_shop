@@ -26,7 +26,7 @@ def init_main_routes(app):
     def catalog_all():
         category_repo = CategoryRepository()
         product_repo = ProductRepository()
-        all_categories = category_repo.find_all_with_counts()  # Використовуємо новий метод
+        all_categories = category_repo.find_all_with_counts()
         all_products = product_repo.find_all()
 
         return render_template('catalog.html',
@@ -34,17 +34,17 @@ def init_main_routes(app):
                                categories=all_categories,
                                products=all_products)
 
-    @app.route('/catalog/<slug>', endpoint='category')  # Змінив шлях для консистентності
+    @app.route('/catalog/<slug>', endpoint='category')
     def category_page(slug):
         category_repo = CategoryRepository()
         product_repo = ProductRepository()
-        all_categories = category_repo.find_all_with_counts()  # Використовуємо новий метод
+        all_categories = category_repo.find_all_with_counts()
 
         category = category_repo.find_by_slug(slug)
         if not category:
             abort(404)
 
-        products = product_repo.find_by_category(category.id)
+        products = product_repo.find_by_category(category.slug)
 
         return render_template('catalog.html',
                                category=category,

@@ -1,7 +1,7 @@
 from app.domain.models import Product, ProductAttribute
 from app.extensions import mongo
 from bson import ObjectId
-from typing import Optional
+from typing import Optional, List
 
 
 class ProductRepository:
@@ -14,7 +14,6 @@ class ProductRepository:
             raise Exception("Products collection not initialized")
 
     def find_featured(self, limit=8):
-        self._ensure_collection()
         products_data = list(self.collection.find({'is_featured': True}).limit(limit))
         return [self._map_to_product(p) for p in products_data]
 
@@ -39,16 +38,16 @@ class ProductRepository:
             return self._map_to_product(data)
         return None
 
-    def find_by_category(self, category_id):
-        products_data = list(self.collection.find({'category_id': ObjectId(category_id)}))
+    def find_by_category(self, category_slug: str) -> List[Product]:
+        self._ensure_collection()
+        products_data = list(self.collection.find({'category_slug': category_slug}))
         return [self._map_to_product(p) for p in products_data]
 
-    def get_related_products(self, categories: str, exclude_id: str, limit: int = 4) -> list[Product]:
-        """Отримати товари з тієї ж категорії, окрім переданого ID"""
+    def get_related_products(self, category_slug: str, exclude_id: str, limit: int = 4) -> List[Product]:
         self._ensure_collection()
         products_data = self.collection.find({
-            'categories': categories,
-            '_id': {'$ne': exclude_id}
+            'category_slug': category_slug,
+            '_id': {'$ne': ObjectId(exclude_id)}
         }).limit(limit)
         return [self._map_to_product(p) for p in products_data]
 
@@ -62,7 +61,7 @@ class ProductRepository:
             name=data['name'],
             description=data['description'],
             price=data['price'],
-            categories=data['categories'],
+            category_id=data.get('category_slug'),
             attributes=attributes,
             images=data['images'],
             stock=data['stock'],

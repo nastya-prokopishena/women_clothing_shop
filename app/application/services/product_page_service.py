@@ -14,7 +14,7 @@ class ProductPageService:
     def get_related_products(self, product: Product, limit: int = 4) -> list[Product]:
         """Отримати схожі товари"""
         return self.repository.get_related_products(
-            categories=product.categories,
+            category_slug=product.category_slug,
             exclude_id=product.product_id,
             limit=limit
         )

@@ -14,6 +14,6 @@ class HomePageService:
         return {
             'featured_products': self.product_repo.find_featured(),
             'new_arrivals': self.product_repo.find_new_arrivals(),
-            'featured_categories': self.category_repo.find_featured(),
+            'featured_categories': self.category_repo.find_featured(limit=None),
             'recent_reviews': self.review_repo.find_for_homepage()
         }

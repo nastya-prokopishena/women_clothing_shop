@@ -9,14 +9,14 @@ class ProductAttribute:
 
 
 class Product:
-    def __init__(self, name: str, description: str, price: float, categories: str,
+    def __init__(self, name: str, description: str, price: float, category_id: str,
                  attributes: ProductAttribute, images: List[str], stock: int,
-                 product_id: Optional[str] = None):  # додаємо ID
+                 product_id: Optional[str] = None):
         self.product_id = product_id  # зберігаємо його
         self.name = name
         self.description = description
         self.price = price
-        self.categories = categories
+        self.category_slug = category_id
         self.attributes = attributes
         self.images = images
         self.stock = stock

@@ -1,4 +1,3 @@
-# app/infrastructure/persistence/category_repository.py
 from app.domain.models import Category
 from app.extensions import mongo
 from bson import ObjectId
@@ -18,8 +17,10 @@ class CategoryRepository:
             return None
         return self._map_to_category(category_data)
 
-    def find_featured(self, limit=6):
-        categories_data = list(self.collection.find({'is_featured': True}).limit(limit))
+    def find_featured(self, limit=None):
+        query = {'is_featured': True}
+        categories_data = list(
+            self.collection.find(query) if limit is None else self.collection.find(query).limit(limit))
         return [self._map_to_category(c) for c in categories_data]
 
     def find_all_with_counts(self):
@@ -27,8 +28,8 @@ class CategoryRepository:
             {
                 '$lookup': {
                     'from': 'products',
-                    'localField': '_id',
-                    'foreignField': 'category_id',
+                    'localField': 'slug',
+                    'foreignField': 'category_slug',
                     'as': 'products'
                 }
             },
@@ -39,6 +40,7 @@ class CategoryRepository:
             }
         ]
         categories_data = list(self.collection.aggregate(pipeline))
+        print([c['name'] for c in categories_data])
         return [self._map_to_category(c) for c in categories_data]
 
     def _map_to_category(self, data):
@@ -46,5 +48,6 @@ class CategoryRepository:
             id=str(data['_id']),
             name=data['name'],
             slug=data['slug'],
-            is_featured=data.get('is_featured', False)
+            is_featured=data.get('is_featured', False),
+            products_count=data.get('products_count', 0)
         )

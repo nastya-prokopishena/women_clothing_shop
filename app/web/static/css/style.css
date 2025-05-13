@@ -156,6 +156,7 @@ header {
 .catalog {
     position: relative;
     top: 60px;
+
 }
 
 /* Категорії */
@@ -169,6 +170,8 @@ header {
     justify-content: center;
     gap: 20px;
     margin-top: 20px;
+    flex-wrap: wrap;
+
 }
 
 .category-card {

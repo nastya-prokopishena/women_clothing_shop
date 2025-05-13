@@ -9,7 +9,7 @@
             {% for cat in categories %}
                 <li>
                     <a href="{{ url_for('category', slug=cat.slug) }}" {% if category and cat.slug == category.slug %}class="active"{% endif %}>
-                        {{ cat.name }} ({{ cat.products|length if cat.products else 0 }})
+                        {{ cat.name }} ({{ cat.products_count }})
                     </a>
                 </li>
             {% endfor %}
