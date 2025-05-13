@@ -12,9 +12,9 @@ def init_product_routes(app):
             abort(404)
 
         # Отримання схожих продуктів
-        category = product.category_id if product.category_id else None
+        category = product.category_slug if product.category_slug else None
         related = repo.get_related_products(
-            categories=category,
+            category_slug=category,
             exclude_id=product.product_id
         )
 
