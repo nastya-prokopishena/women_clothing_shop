@@ -1,0 +1,366 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f7f4;
+    color: #333;
+}
+
+/* Основний контейнер для продукту */
+.product-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px; /* Зменшено з 40px */
+    gap: 30px; /* Додано проміжок між секціями */
+}
+
+/* Галерея зображень */
+.product-gallery {
+    flex: 1;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product-gallery #main-image {
+    max-width: 100%;
+    max-height: 90vh;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    object-fit: contain;
+}
+
+.thumbnail-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.thumbnail {
+    width: 70px;
+    height: 70px;
+    border-radius: 6px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.thumbnail:hover {
+    transform: scale(1.05);
+    border: 2px solid #7c6f64;
+}
+
+/* Інформація про товар */
+.product-info {
+    flex: 2;
+    max-width: 600px;
+}
+
+.product-info h1 {
+    font-size: 25px;
+    font-family: 'Georgia', serif;
+    margin-bottom: 20px;
+}
+
+.price-section {
+    margin-bottom: 20px;
+}
+
+.price {
+    font-size: 22px;
+    font-family: 'Georgia', serif;
+    color: #7c6f64;
+}
+
+/* Атрибути */
+.attributes {
+    margin-bottom: 30px;
+}
+
+/* Замінюємо .color-options на .colors (як у вашому HTML) */
+.colors {
+    display: flex;
+    align-items: center; /* Вирівнюємо по вертикалі */
+    gap: 15px; /* Проміжок між написом "Кольори:" та кольорами */
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+/* Додаємо стилі для тексту "Кольори:" */
+.colors > span {
+    font-weight: 500; /* Напівжирний текст */
+    margin-right: 10px; /* Проміжок після напису */
+}
+
+.color-box {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.color-box:hover {
+    transform: scale(1.1);
+    border-color: #555;
+}
+
+
+.size-button {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.size-button:hover {
+    background-color: #f0f0f0;
+}
+
+/* Кнопка додавання в кошик */
+.add-to-cart {
+    padding: 12px 20px;
+    background-color: #7c6f64;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart:hover {
+    background-color: #5a4b3f;
+}
+
+/* Опис товару */
+.care {
+    margin-top: 40px;
+}
+
+.care h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.care p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.description {
+    margin-top: 40px;
+}
+
+.description h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.description p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Стилі для акордіонів */
+.accordions {
+    margin-top: 25px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.accordion {
+    border-bottom: 1px solid #eee;
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    cursor: pointer;
+}
+
+.accordion-title {
+    font-size: 16px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: #5a4b3f;
+}
+
+.accordion-icon {
+    font-size: 12px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 15px;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Активний стан */
+.accordion.active .accordion-icon {
+    transform: rotate(180deg);
+}
+
+.accordion.active .accordion-content {
+    max-height: 500px; /* Або використовуйте auto для динамічної висоти */
+    padding: 10px 15px 20px;
+}
+
+/* Секція коментарів */
+.comments-section {
+    margin-top: 40px;
+    padding: 25px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.comments-section h2 {
+    font-size: 22px;
+    color: #5a4b3f;
+    margin-bottom: 25px;
+}
+
+/* Форма коментарів */
+.comment-form {
+    margin-bottom: 30px;
+}
+
+.comment-form textarea {
+    width: 100%;
+    height: 100px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    resize: vertical;
+}
+
+.comment-form button {
+    background: #7c6f64;
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+}
+
+.comment-form button:hover {
+    background: #5a4b3f;
+}
+
+/* Список коментарів */
+.comments-list {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.comment {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #f9f7f4;
+    border-radius: 6px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.author {
+    font-weight: 600;
+    color: #5a4b3f;
+}
+
+.date {
+    color: #999;
+}
+
+.comment .text {
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Схожі товари */
+.related-products {
+    margin-top: 60px;
+    padding: 40px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.related-products h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.related-item {
+    text-align: center;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.related-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.related-item h3 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.related-item p {
+    color: #7c6f64;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Адаптація для мобільних */
+@media (max-width: 768px) {
+    .product-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-info {
+        max-width: 100%;
+    }
+
+    .product-gallery #main-image {
+        max-width: 90vw;
+        max-height: 60vh;
+    }
+
+    .thumbnail {
+        width: 50px;
+        height: 50px;
+    }
+}

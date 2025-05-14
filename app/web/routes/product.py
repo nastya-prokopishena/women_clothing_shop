@@ -1,6 +1,7 @@
 from flask import render_template, abort
 from app.infrastructure.persistence.product_repository import ProductRepository
 
+
 def init_product_routes(app):
     @app.route('/product/<string:product_id>')
     def product_page(product_id: str):

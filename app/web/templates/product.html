@@ -3,28 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ product.name }}</title>
-    <link rel="stylesheet" href="app/web/static/css/product.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/product_page.css') }}">
 </head>
 <body>
-    <!-- Головна секція -->
     <div class="product-container">
         <!-- Галерея зображень -->
         <div class="product-gallery">
-            {% for image in product.images %}
-                <img src="{{ image }}" alt="{{ product.name }}">
-            {% endfor %}
+            {% if product.images %}
+                <img id="main-image" src="{{ url_for('static', filename='images/' ~ product.images[0]) }}" alt="{{ product.name }}">
+                <div class="thumbnail-container">
+                    {% for image in product.images %}
+                        <img class="thumbnail" src="{{ url_for('static', filename='images/' ~ image) }}" alt="{{ product.name }}">
+                    {% endfor %}
+                </div>
+            {% else %}
+                <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="Зображення відсутнє">
+            {% endif %}
         </div>
 
         <!-- Інформація про товар -->
         <div class="product-info">
             <h1>{{ product.name }}</h1>
-
-            <!-- Ціна -->
             <div class="price-section">
                 <span class="price">{{ product.price }} грн</span>
             </div>
 
-            <!-- Атрибути -->
             <div class="attributes">
                 <div class="colors">
                     <span>Кольори:</span>
@@ -41,13 +44,53 @@
                 </div>
             </div>
 
-            <!-- Кнопка додавання в кошик -->
             <button class="add-to-cart">Додати в кошик</button>
 
-            <!-- Опис -->
-            <div class="description">
-                <h3>Опис товару</h3>
-                <p>{{ product.description }}</p>
+            <!-- Акордіони -->
+            <div class="accordions">
+                {% if product.care %}
+                <div class="accordion">
+                    <div class="accordion-header">
+                        <span class="accordion-title">Догляд</span>
+                        <span class="accordion-icon"> ᐳ </span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>{{ product.care }}</p>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="accordion">
+                    <div class="accordion-header">
+                        <span class="accordion-title">Опис</span>
+                        <span class="accordion-icon"> ᐳ </span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>{{ product.description }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секція коментарів (НОВЕ) -->
+            <div class="comments-section">
+                <h2>Коментарі ({{ comments|length }})</h2>
+                <form class="comment-form" method="POST" action="/add_comment">
+                    <textarea name="comment" placeholder="Залишити коментар..." required></textarea>
+                    <button type="submit">Відправити</button>
+                </form>
+                <div class="comments-list">
+                    {% for comment in comments %}
+                    <div class="comment">
+                        <div class="comment-header">
+                            <span class="author">{{ comment.author }}</span>
+                            <span class="date">{{ comment.date }}</span>
+                        </div>
+                        <p class="text">{{ comment.text }}</p>
+                    </div>
+                    {% else %}
+                    <p>Ще немає коментарів. Будьте першим!</p>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
@@ -57,17 +100,52 @@
         <div class="related-products">
             <h2>Рекомендовані товари</h2>
             <div class="related-grid">
-                {% for product in related_products %}
+                {% for related in related_products %}
                     <div class="related-item">
-                        <img src="{{ product.images[0] }}" alt="{{ product.name }}">
-                        <h3>{{ product.name }}</h3>
-                        <p>{{ product.price }} грн</p>
+                        {% if related.images %}
+                            <img src="{{ url_for('static', filename='images/' ~ related.images[0]) }}" alt="{{ related.name }}">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="Зображення відсутнє">
+                        {% endif %}
+                        <h3>{{ related.name }}</h3>
+                        <p>{{ related.price }} грн</p>
                     </div>
                 {% endfor %}
             </div>
         </div>
     {% endif %}
 
-    <script src="/static/js/product.js"></script>
+    <script>
+        // Скрипт для мініатюр
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        const mainImage = document.getElementById('main-image');
+
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', () => {
+                mainImage.src = thumbnail.src;
+            });
+        });
+
+        // Скрипт для акордіонів
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const accordion = header.parentElement;
+                const isActive = accordion.classList.contains('active');
+
+                document.querySelectorAll('.accordion').forEach(a => {
+                    a.classList.remove('active');
+                    a.querySelector('.accordion-content').style.maxHeight = '0';
+                    a.querySelector('.accordion-icon').style.transform = 'rotate(0deg)';
+                });
+
+                if (!isActive) {
+                    accordion.classList.add('active');
+                    const content = accordion.querySelector('.accordion-content');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    accordion.querySelector('.accordion-icon').style.transform = 'rotate(90deg)';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

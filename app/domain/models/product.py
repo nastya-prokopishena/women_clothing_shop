@@ -9,11 +9,12 @@ class ProductAttribute:
 
 
 class Product:
-    def __init__(self, name: str, description: str, price: float, category_id: str,
+    def __init__(self, name: str, care: str, description: str, price: float, category_id: str,
                  attributes: ProductAttribute, images: List[str], stock: int,
                  product_id: Optional[str] = None):
         self.product_id = product_id  # зберігаємо його
         self.name = name
+        self.care = care
         self.description = description
         self.price = price
         self.category_slug = category_id
@@ -22,4 +23,3 @@ class Product:
         self.stock = stock
         self.rating = 0.0
         self.reviews_count = 0
-

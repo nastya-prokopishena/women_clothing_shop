@@ -59,6 +59,7 @@ class ProductRepository:
         )
         return Product(
             name=data['name'],
+            care=data['care'],
             description=data['description'],
             price=data['price'],
             category_id=data.get('category_slug'),
