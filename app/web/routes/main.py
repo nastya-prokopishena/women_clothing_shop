@@ -1,4 +1,4 @@
-from flask import render_template, abort
+from flask import render_template, abort, request
 from app.application.services.home_page_service import HomePageService
 from app.infrastructure.persistence.category_repository import CategoryRepository
 from app.infrastructure.persistence.product_repository import ProductRepository
@@ -27,12 +27,17 @@ def init_main_routes(app):
         category_repo = CategoryRepository()
         product_repo = ProductRepository()
         all_categories = category_repo.find_all_with_counts()
-        all_products = product_repo.find_all()
+
+        page = request.args.get('page', 1, type=int)
+        per_page = 12
+
+        products_data = product_repo.find_paginated(page=page, per_page=per_page)
 
         return render_template('catalog.html',
                                category=None,
                                categories=all_categories,
-                               products=all_products)
+                               products=products_data['items'],
+                               pagination=products_data)
 
     @app.route('/catalog/<slug>', endpoint='category')
     def category_page(slug):
@@ -44,9 +49,17 @@ def init_main_routes(app):
         if not category:
             abort(404)
 
-        products = product_repo.find_by_category(category.slug)
+        page = request.args.get('page', 1, type=int)
+        per_page = 12
+
+        products_data = product_repo.find_paginated(
+            page=page,
+            per_page=per_page,
+            category_slug=slug
+        )
 
         return render_template('catalog.html',
                                category=category,
                                categories=all_categories,
-                               products=products)
+                               products=products_data['items'],
+                               pagination=products_data)

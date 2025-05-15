@@ -21,9 +21,15 @@
         {% if products %}
             {% for product in products %}
                 <div class="product-card">
-                    <img src="{{ product.images[0] if product.images else '/static/images/placeholder.jpg' }}" alt="{{ product.name }}">
-                    <h3>{{ product.name }}</h3>
-                    <p>{{ product.price }} грн</p>
+                    <a href="{{ url_for('product_page', product_id=product.product_id) }}">
+                        {% if product.images %}
+                            <img src="{{ url_for('static', filename='images/' ~ product.images[0]) }}" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="Зображення відсутнє">
+                        {% endif %}
+                        <h3>{{ product.name }}</h3>
+                        <p>{{ product.price }} грн</p>
+                    </a>
                     <button class="favorite-btn">♥</button>
                 </div>
             {% endfor %}
@@ -31,5 +37,30 @@
             <p>Товарів поки немає.</p>
         {% endif %}
     </div>
+
+    <!-- Пагінація -->
+    {% if pagination and pagination.pages > 1 %}
+    <div class="pagination">
+        {% if pagination.has_prev %}
+            <a href="{{ url_for(request.endpoint, page=pagination.prev_num, **request.view_args) }}">&laquo;</a>
+        {% endif %}
+
+        {% for page in pagination.iter_pages() %}
+            {% if page %}
+                {% if page == pagination.page %}
+                    <span class="current">{{ page }}</span>
+                {% else %}
+                    <a href="{{ url_for(request.endpoint, page=page, **request.view_args) }}">{{ page }}</a>
+                {% endif %}
+            {% else %}
+                <span>...</span>
+            {% endif %}
+        {% endfor %}
+
+        {% if pagination.has_next %}
+            <a href="{{ url_for(request.endpoint, page=pagination.next_num, **request.view_args) }}">&raquo;</a>
+        {% endif %}
+    </div>
+    {% endif %}
 </section>
 {% endblock %}

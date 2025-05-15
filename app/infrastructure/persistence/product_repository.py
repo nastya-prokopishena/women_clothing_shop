@@ -68,3 +68,23 @@ class ProductRepository:
             stock=data['stock'],
             product_id=str(data['_id'])
         )
+
+    def find_paginated(self, page=1, per_page=12, category_slug=None):
+        self._ensure_collection()
+        query = {}
+        if category_slug:
+            query['category_slug'] = category_slug
+
+        total = self.collection.count_documents(query)
+        skip = (page - 1) * per_page
+        products_data = list(self.collection.find(query).skip(skip).limit(per_page))
+
+        products = [self._map_to_product(p) for p in products_data]
+
+        return {
+            'items': products,
+            'total': total,
+            'page': page,
+            'per_page': per_page,
+            'pages': (total + per_page - 1) // per_page
+        }
