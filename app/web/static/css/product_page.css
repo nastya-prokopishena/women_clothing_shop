@@ -212,6 +212,12 @@ body {
     line-height: 1.6;
 }
 
+.average-rating {
+    font-size: 18px;
+    color: #5a4b3f;
+    margin: 15px 0;
+}
+
 /* Активний стан */
 .accordion.active .accordion-icon {
     transform: rotate(180deg);
@@ -223,6 +229,14 @@ body {
 }
 
 /* Секція коментарів */
+.comments-list {
+    max-height: 500px; /* Обмеження висоти */
+    overflow-y: auto;  /* Вертикальний скрол */
+    padding-right: 10px; /* Щоб текст не наїжджав на скрол */
+    border-top: 1px solid #eee;
+    margin-top: 15px;
+}
+
 .comments-section {
     margin-top: 40px;
     padding: 25px;
@@ -267,6 +281,37 @@ body {
 }
 
 /* Список коментарів */
+/* Стилі для рейтингу */
+.rating-input {
+    margin-bottom: 15px;
+}
+
+.stars {
+    display: inline-flex;
+    gap: 5px;
+}
+
+input[type="radio"].star {
+    display: none;
+}
+
+.star {
+    cursor: pointer;
+    font-size: 24px;
+    color: #ddd;
+    transition: color 0.2s;
+}
+
+input[type="radio"]:checked ~ .star,
+.star:hover {
+    color: #ffd700;
+}
+
+.comment-rating {
+    color: #ffd700;
+    margin: 5px 0;
+}
+
 .comments-list {
     border-top: 1px solid #eee;
     padding-top: 20px;

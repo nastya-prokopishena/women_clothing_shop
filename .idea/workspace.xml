@@ -6,36 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="9094745e-b464-441a-b31f-9557980d8914" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/__pycache__/__init__.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/__pycache__/__init__.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/__pycache__/config.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/__pycache__/config.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/__pycache__/extensions.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/__pycache__/extensions.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/application/__pycache__/__init__.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/application/__pycache__/__init__.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/application/services/__pycache__/__init__.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/application/services/__pycache__/__init__.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/application/services/__pycache__/home_page_service.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/application/services/__pycache__/home_page_service.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/domain/__pycache__/__init__.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/__pycache__/__init__.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/domain/models/__pycache__/__init__.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/__pycache__/__init__.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/domain/models/__pycache__/cart.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/__pycache__/cart.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/domain/models/__pycache__/category.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/__pycache__/category.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/domain/models/__pycache__/coupon.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/__pycache__/coupon.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/domain/models/__pycache__/order.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/__pycache__/order.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/domain/models/__pycache__/product.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/__pycache__/product.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/domain/models/__pycache__/review.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/__pycache__/review.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/domain/models/__pycache__/user.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/__pycache__/user.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/infrastructure/__pycache__/__init__.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/infrastructure/__pycache__/__init__.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/infrastructure/persistence/__pycache__/__init__.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/infrastructure/persistence/__pycache__/__init__.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/infrastructure/persistence/__pycache__/category_repository.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/infrastructure/persistence/__pycache__/category_repository.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/infrastructure/persistence/__pycache__/product_repository.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/infrastructure/persistence/__pycache__/product_repository.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/infrastructure/persistence/__pycache__/review_repository.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/infrastructure/persistence/__pycache__/review_repository.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/infrastructure/persistence/product_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/infrastructure/persistence/product_repository.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/web/__pycache__/__init__.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/web/__pycache__/__init__.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/web/routes/__pycache__/__init__.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/web/routes/__pycache__/__init__.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/web/routes/__pycache__/main.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/web/routes/__pycache__/main.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/web/routes/__pycache__/product.cpython-311.pyc" beforeDir="false" afterPath="$PROJECT_DIR$/app/web/routes/__pycache__/product.cpython-311.pyc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/web/routes/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/web/routes/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/domain/models/review.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/domain/models/review.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/infrastructure/persistence/review_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/infrastructure/persistence/review_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/web/routes/product.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/web/routes/product.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/web/static/css/product_page.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/web/static/css/product_page.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/web/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/web/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/web/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/web/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/web/templates/catalog.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/web/templates/catalog.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/web/templates/product.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/web/templates/product.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +32,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
@@ -98,7 +72,6 @@
   <component name="RunManager">
     <configuration name="run" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="women_clothing_shop" />
-      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -146,6 +119,8 @@
       <workItem from="1747054478889" duration="26000" />
       <workItem from="1747070818377" duration="7138000" />
       <workItem from="1747222810949" duration="9251000" />
+      <workItem from="1747327645854" duration="9466000" />
+      <workItem from="1747377274979" duration="1258000" />
     </task>
     <servers />
   </component>
@@ -164,6 +139,6 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/women_clothing_shop$run.coverage" NAME="run Coverage Results" MODIFIED="1747232166556" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/women_clothing_shop$run.coverage" NAME="run Coverage Results" MODIFIED="1747378229316" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

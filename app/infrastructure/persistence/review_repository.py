@@ -1,11 +1,32 @@
 from app.domain.models import Review
 from app.extensions import mongo
-from bson import ObjectId
+from datetime import datetime
+
 
 class ReviewRepository:
     def __init__(self):
         self.collection = mongo.db.reviews
 
+    # Додано метод для збереження нового коментаря
+    def add_review(self, product_id: str, text: str, author: str, rating: int):
+        review_data = {
+            "product_id": product_id,
+            "text": text,
+            "author": author,
+            "created_at": datetime.now(),
+            "rating": rating,
+            # Якщо потрібно додати user_id для авторизованих користувачів:
+            # "user_id": user_id,
+        }
+        result = self.collection.insert_one(review_data)
+        return str(result.inserted_id)
+
+    # Оновлений метод для отримання коментарів товару
+    def get_reviews_by_product_id(self, product_id: str):
+        reviews_data = self.collection.find({"product_id": product_id}).sort("created_at", -1)
+        return [self._map_to_review(r) for r in reviews_data]
+
+    # Метод для головної сторінки (залишається без змін)
     def find_for_homepage(self, limit=5):
         reviews_data = list(self.collection.aggregate([
             {'$sort': {'created_at': -1}},
@@ -26,13 +47,14 @@ class ReviewRepository:
         ]))
         return [self._map_to_review(r) for r in reviews_data]
 
+    # Оновлений маппінг з урахуванням нових полів
     def _map_to_review(self, data):
         return Review(
             id=str(data['_id']),
-            product_id=str(data.get('product_id', '')),
-            user_id=str(data.get('user_id', '')),
-            user_name=data['user_name'],
-            rating=data['rating'],
+            product_id=str(data['product_id']),
+            user_name=data.get('author', 'Гість'),  # Використовуємо 'author' замість 'user_name'
             text=data['text'],
+            created_at=data['created_at'],
+            rating=data.get('rating', 0),
             images=data.get('images', [])
         )

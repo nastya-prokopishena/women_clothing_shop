@@ -27,6 +27,7 @@
             <span class="price">{{ product.price }} грн</span>
         </div>
 
+
         <div class="attributes">
             <div class="colors">
                 <span>Кольори:</span>
@@ -70,27 +71,66 @@
             </div>
         </div>
 
+
         <!-- Секція коментарів -->
-        <div class="comments-section">
-            <h2>Коментарі ({{ comments|length }})</h2>
-            <form class="comment-form" method="POST" action="/add_comment">
-                <textarea name="comment" placeholder="Залишити коментар..." required></textarea>
-                <button type="submit">Відправити</button>
-            </form>
-            <div class="comments-list">
-                {% for comment in comments %}
-                <div class="comment">
-                    <div class="comment-header">
-                        <span class="author">{{ comment.author }}</span>
-                        <span class="date">{{ comment.date }}</span>
-                    </div>
-                    <p class="text">{{ comment.text }}</p>
-                </div>
-                {% else %}
-                <p>Ще немає коментарів. Будьте першим!</p>
+<div class="comments-section">
+    <h2>Відгуки ({{ comments|length }})</h2>
+
+    <!-- Середня оцінка -->
+    {% if average_rating %}
+    <div class="average-rating">
+        Середня оцінка: {{ average_rating|round(1) }} / 5
+    </div>
+    {% endif %}
+
+    <!-- Форма додавання коментаря -->
+    <form class="comment-form" method="POST" action="{{ url_for('add_comment', product_id=product.product_id) }}">
+        <!-- Рейтинг -->
+        <div class="rating-input">
+            <span>Оцінка:</span>
+            <div class="stars">
+                {% for i in range(5, 0, -1) %}
+                    <input
+                        type="radio"
+                        id="star{{ i }}"
+                        name="rating"
+                        value="{{ i }}"
+                        required
+                    >
+                    <label for="star{{ i }}" class="star">★</label>
                 {% endfor %}
             </div>
         </div>
+
+        <!-- Коментар -->
+        <label for="comment" class="visually-hidden">Ваш коментар</label>
+        <textarea
+            id="comment"
+            name="comment"
+            placeholder="Залишити коментар..."
+            required
+        ></textarea>
+
+        <button type="submit">Відправити</button>
+    </form>
+
+    <!-- Список коментарів зі скролом -->
+    <div class="comments-list">
+        {% for comment in comments %}
+        <div class="comment">
+            <div class="comment-header">
+                <span class="author">{{ comment.author }}</span>
+                <span class="date">{{ comment.date }}</span>
+            </div>
+            <!-- Відображення рейтингу -->
+            <div class="comment-rating">
+                {% for _ in range(comment.rating) %}★{% endfor %}
+            </div>
+            <p class="text">{{ comment.text }}</p>
+        </div>
+        {% else %}
+        <p>Ще немає відгуків. Будьте першим!</p>
+        {% endfor %}
     </div>
 </div>
 
