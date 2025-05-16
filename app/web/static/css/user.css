@@ -1,0 +1,328 @@
+
+.registration-form-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: left;
+}
+
+.registration-form-box h2 {
+    margin-bottom: 20px;
+    font-family: 'Georgia', serif;
+    color: #333;
+    text-align: center;
+}
+
+.registration-form-box .form-control {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+}
+
+.registration-form-box .btn-primary {
+    background-color: #7c6f64;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+}
+
+.registration-form-box .btn-primary:hover {
+    background-color: #5e544c;
+}
+
+.profile-section {
+    display: flex;
+    padding: 40px 20px;
+    background-color: #f7f7f7;
+    margin-top: 80px; /* Відступ для профілю, щоб не накладався на хедер */
+}
+
+.profile-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.profile-sidebar {
+    width: 25%;
+    padding-right: 20px;
+}
+
+.profile-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.profile-nav li {
+    margin-bottom: 15px;
+}
+
+.profile-nav li a {
+    display: block;
+    padding: 10px;
+    background-color: #f1f1f1;
+    color: #333;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.profile-nav li a:hover, .profile-nav li a.active {
+    background-color: #7c6f64;
+    color: white;
+}
+
+.profile-info {
+    width: 75%;
+}
+
+.profile-info h2 {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.btn-logout {
+    margin-top: 20px;
+    background-color: #c0392b;
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        flex-direction: column;
+    }
+
+    .profile-sidebar {
+        width: 100%;
+        padding-right: 0;
+    }
+
+    .profile-info {
+        width: 100%;
+    }
+}
+
+.btn-logout:hover {
+    background-color: #a93226;
+}
+
+.alert {
+    animation: fadein 1s, fadeout 1s 9s;
+}
+
+@keyframes fadein {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes fadeout {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border-left: 4px solid #28a745;
+    padding: 10px;
+    margin-bottom: 15px;
+    color: #155724;
+    border-radius: 5px;
+}
+
+.alert-error,
+.alert-danger {
+    background-color: #f8d7da;
+    border-left: 4px solid #dc3545;
+    padding: 10px;
+    margin-bottom: 15px;
+    color: #721c24;
+    border-radius: 5px;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    border-left: 4px solid #17a2b8;
+    padding: 10px;
+    margin-bottom: 15px;
+    color: #0c5460;
+    border-radius: 5px;
+}
+/* Встановлюємо стиль для маскування пароля */
+input[type="password"] {
+    -webkit-text-security: circle; /* Для браузерів на базі WebKit */
+    text-security: circle; /* Для стандартного CSS */
+}
+
+.input-field {
+    max-width: 210px; /* обмежує ширину полів вводу до 400px */
+    width: 100%; /* щоб поля займали всю доступну ширину в межах максимального значення */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.btn-profile {
+    background-color: #fff; /* білий фон */
+    border: 1px solid #7c6f64; /* межа кольору для кнопки */
+    color: #7c6f64; /* колір тексту */
+    padding: 8px 6px; /* відступи для кнопки */
+    font-size: 10px; /* розмір шрифта */
+    border-radius: 30px; /* заокруглення країв */
+    font-weight: bold; /* жирний текст */
+    cursor: pointer;
+    width: auto;
+    transition: all 0.3s ease;
+}
+
+.btn-profile:hover {
+    background-color: #7c6f64; /* колір фону при наведенні */
+    color: white; /* колір тексту при наведенні */
+    border-color: #7c6f64; /* зміна кольору межі при наведенні */
+}
+
+.address-select {
+    width: 100%;
+    max-width: 100%; /* не ширше, ніж блок */
+    height: auto;
+    min-height: 10px; /* зробити його вищим */
+    line-height: 1.4;
+    font-size: 14px;
+    padding: 10px;
+}
+
+.address-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 40px; /* вертикальний і горизонтальний відступ */
+    margin-bottom: 20px;
+}
+
+.address-form-grid .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.address-form-grid .form-group.full-width {
+    grid-column: 1 / -1; /* ця група займає всю ширину (обидві колонки) */
+}
+
+/* Адаптивність для мобільних */
+@media (max-width: 600px) {
+    .address-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .address-form-grid .form-group.full-width {
+        grid-column: auto;
+    }
+}
+
+.form-row {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.address-dropdown {
+    max-width: 500px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fdfdfd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.dropdown-toggle {
+    padding: 12px 16px;
+    cursor: pointer;
+    background: #e9e9e9;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-menu {
+    padding: 10px 16px;
+}
+
+.dropdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.btn-remove {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-remove:hover {
+    background: #c82333;
+}
+.password-container {
+    position: relative;
+}
+
+.password-container input {
+    padding-right: 40px;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 33%;
+    right: 12px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #888;
+}
+.toggle-password:hover {
+    color: #333;
+}

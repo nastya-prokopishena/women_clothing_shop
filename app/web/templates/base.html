@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Магазин жіночого одягу{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block user_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}">
+    {% endblock %}
 </head>
 <body>
     <header>
@@ -18,6 +21,13 @@
                     <li><a href="{{ url_for('catalog_all') }}">Магазин</a></li>
                     <li><a href="{{ url_for('home') }}#about">Про нас</a></li>
                     <li><a href="#footer">Контакти</a></li>
+                    {% if session.get('user_name') %}
+                        <li><a href="{{ url_for('auth.profile') }}">Профіль</a></li>
+                        <li><a href="{{ url_for('auth.logout') }}">Вийти</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('auth.register') }}">Реєстрація</a></li>
+                        <li><a href="{{ url_for('auth.login') }}">Вхід</a></li>
+                    {% endif %}
                     <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Кошик</a></li>
                 </ul>
             </div>
@@ -43,6 +53,15 @@
 
     <script src="{{ url_for('static', filename='js/product.js') }}"></script>
     <script src="{{ url_for('static', filename='js/product_slider.js') }}"></script>
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.alert').forEach((alert) => {
+            setTimeout(() => {
+                alert.remove();
+            }, 10000); // повідомлення зникає через 10 секунд
+        });
+      });
+    </script>
 
 </body>
 </html>
