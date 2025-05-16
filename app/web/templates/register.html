@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-video-container">
+        <video autoplay muted loop playsinline class="background-video">
+            <source src="{{ url_for('static', filename='video/videoplayback.mp4') }}" type="video/mp4">
+            Ваш браузер не підтримує відео.
+        </video>
+        <div class="content-overlay">
+            <div class="registration-form-box">
+                <h2>Реєстрація</h2>
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    <div class="alert alert-info">
+                      {% for message in messages %}
+                        <div>{{ message }}</div>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                {% endwith %}
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Електронна пошта</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Ім’я</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3 password-wrapper">
+                        <label for="password" class="form-label">Пароль</label>
+                        <div class="password-container">
+                            <input type="password" class="form-control" id="password" name="password" required>
+                            <span class="toggle-password" onclick="togglePassword('password', this)">🙈</span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Зареєструватися</button>
+
+                    <p style="text-align: center; margin-top: 15px;">
+                        Маєте обліковий запис?
+                        <a href="{{ url_for('auth.login') }}">Увійти</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function togglePassword(inputId, toggleElement) {
+        const input = document.getElementById(inputId);
+        const isPassword = input.type === 'password';
+        input.type = isPassword ? 'text' : 'password';
+        toggleElement.textContent = isPassword ? '🙊' : '🙈';
+    }
+</script>
+{% endblock %}

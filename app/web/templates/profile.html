@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block user_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="alert-container" style="z-index: 1000; position: relative;">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+
+<section class="profile-section">
+    <div class="profile-container">
+        <div class="profile-sidebar">
+            <ul class="profile-nav">
+                <li><a href="#" onclick="showSection('account-data', this)">Дані облікового запису</a></li>
+                <li><a href="#" onclick="showSection('orders', this)">Мої замовлення</a></li>
+                <li><a href="#" onclick="showSection('delivery-addresses', this)">Адреса доставки</a></li>
+                <li><a href="{{ url_for('auth.logout') }}" class="btn btn-logout">Вийти</a></li>
+            </ul>
+        </div>
+
+        <div class="profile-info">
+            <div id="account-data">
+                <h2>Дані облікового запису</h2>
+                <form method="POST" action="{{ url_for('auth.profile') }}">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Імʼя:</label>
+                            <input type="text" id="name" name="name" value="{{ user_name }}" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label for="surname">Прізвище:</label>
+                            <input type="text" id="surname" name="surname" value="{{ surname or '' }}" class="input-field">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" value="{{ user_email }}" readonly class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Номер телефону:</label>
+                            <input type="text" id="phone" name="phone" placeholder="Введіть номер телефону" value="{{ user_phone or '' }}" class="input-field">
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 30px; font-size: 18px; color: #555;">Пароль</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="current_password">Поточний пароль:</label>
+                            <input type="password" id="current_password" name="current_password" placeholder="Введіть поточний пароль" class="input-field">
+                            <a href="{{ url_for('auth.forgot_password') }}" class="btn btn-profile">Забули пароль?</a>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_password">Новий пароль:</label>
+                            <input type="password" id="new_password" name="new_password" placeholder="Введіть новий пароль" class="input-field">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-profile" name="save_all" value="1">Зберегти зміни</button>
+                </form>
+            </div>
+
+            <div id="orders" style="display: none;">
+                <h2>Мої замовлення</h2>
+                <ul>
+                    <li>Замовлення 1</li>
+                    <li>Замовлення 2</li>
+                </ul>
+            </div>
+
+            <div id="delivery-addresses" style="display: none;">
+                <h2>Адреса доставки</h2>
+                <div class="address-dropdown">
+                    <div class="dropdown-toggle" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleAddressDropdown()">
+                        <span>Ваші адреси:</span>
+                        <button type="button" style="background: none; border: none; font-size: 18px; cursor: pointer; padding: 0; margin-left: 10px;">⌄</button>
+                    </div>
+                    <div class="dropdown-menu" id="address-dropdown" style="display: none;">
+                        {% for addr in addresses %}
+                        <div class="dropdown-item">
+                            <span>{{ addr.country }}, {{ addr.postal_code }}, {{ addr.city }}, {{ addr.street }}, {{ addr.house }}</span>
+                            <form method="POST" action="{{ url_for('auth.profile') }}" style="display: inline;">
+                                <input type="hidden" name="delete_address_id" value="{{ addr._id }}">
+                                <button type="submit" class="btn btn-remove">-</button>
+                            </form>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <h3>Додати нову адресу:</h3>
+                <form method="POST" action="{{ url_for('auth.profile') }}">
+                    <div class="address-form-grid">
+                        <div class="form-group">
+                            <label for="street">Вулиця:</label>
+                            <input type="text" id="street" name="street" placeholder="Вулиця" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label for="house">Номер будинку:</label>
+                            <input type="text" id="house" name="house" placeholder="Номер будинку" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Місто:</label>
+                            <input type="text" id="city" name="city" placeholder="Місто" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label for="postal_code">Поштовий індекс:</label>
+                            <input type="text" id="postal_code" name="postal_code" placeholder="Поштовий індекс" class="input-field">
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="country">Країна:</label>
+                            <input type="text" id="country" name="country" placeholder="Країна" class="input-field">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-profile" name="save_address" value="1">Зберегти адресу</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function showSection(sectionId, element) {
+        document.querySelectorAll('.profile-info > div').forEach(function(div) {
+            div.style.display = 'none';
+        });
+
+        document.getElementById(sectionId).style.display = 'block';
+
+        document.querySelectorAll('.profile-nav a').forEach(function(link) {
+            link.classList.remove('active');
+        });
+
+        element.classList.add('active');
+    }
+
+    function toggleAddressDropdown() {
+        const dropdown = document.getElementById('address-dropdown');
+        dropdown.style.display = (dropdown.style.display === 'none' || dropdown.style.display === '') ? 'block' : 'none';
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        showSection('account-data', document.querySelector('.profile-nav a'));
+    });
+</script>
+{% endblock %}

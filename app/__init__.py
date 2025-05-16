@@ -1,7 +1,9 @@
 from flask import Flask
 from app.config import Config
 from app.extensions import mongo
+from app.web.routes.auth import bp as auth_bp
 import os
+from app.extensions import mail
 from urllib.parse import quote_plus
 from pymongo.errors import ConnectionFailure, OperationFailure
 import sys
@@ -14,10 +16,18 @@ def create_app():
     app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
     app.config.from_object(Config)
 
+    app.secret_key = 'your-secret-key'
+
+    # Підключаємо Blueprint для auth
+    app.register_blueprint(auth_bp)
+
     print("\n=== Initializing MongoDB Connection ===")
     print(f"Using MONGO_URI: {app.config['MONGO_URI']}")
 
     try:
+        mail.init_app(app)  # для токену для скидання паролю
+        print("✅ Flask-Mail initialized")
+
         # Ініціалізація MongoDB
         mongo.init_app(app, uri=app.config['MONGO_URI'])
 
