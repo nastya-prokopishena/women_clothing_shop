@@ -71,6 +71,7 @@ class ProductRepository:
 
     def find_paginated(self, page=1, per_page=12, category_slug=None):
         self._ensure_collection()
+
         query = {}
         if category_slug:
             query['category_slug'] = category_slug
@@ -85,6 +86,43 @@ class ProductRepository:
             'items': products,
             'total': total,
             'page': page,
-            'per_page': per_page,
-            'pages': (total + per_page - 1) // per_page
+            'per_page': per_page
         }
+
+    def find_top_rated_products(self, limit=8):
+        pipeline = [
+            {
+                '$lookup': {
+                    'from': 'reviews',
+                    'localField': '_id',
+                    'foreignField': 'product_id',
+                    'as': 'reviews'
+                }
+            },
+            {
+                '$addFields': {
+                    'avg_rating': {
+                        '$avg': '$reviews.rating'
+                    },
+                    'reviews_count': {
+                        '$size': '$reviews'
+                    }
+                }
+            },
+            {
+                '$match': {
+                    'reviews_count': {'$gt': 0}
+                }
+            },
+            {
+                '$sort': {
+                    'avg_rating': -1
+                }
+            },
+            {
+                '$limit': limit
+            }
+        ]
+
+        top_rated_products = list(self.collection.aggregate(pipeline))
+        return [self._map_to_product(p) for p in top_rated_products]

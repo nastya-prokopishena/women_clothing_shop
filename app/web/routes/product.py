@@ -43,7 +43,7 @@ def init_product_routes(app):
     def add_comment(product_id: str):
         review_repo = ReviewRepository()
         comment_text = request.form.get('comment', '').strip()
-        rating = int(request.form.get('rating', 0))  # Отримання рейтингу
+        rating = int(request.form.get('rating', 0))
 
         # Валідація
         if not comment_text or rating < 1 or rating > 5:
@@ -52,7 +52,7 @@ def init_product_routes(app):
         review_repo.add_review(
             product_id=product_id,
             text=comment_text,
-            author="Гість",  # Замінити на логіку авторизації
+            author="Гість",
             rating=rating
         )
 

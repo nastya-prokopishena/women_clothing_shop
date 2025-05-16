@@ -283,16 +283,39 @@ body {
 /* Список коментарів */
 /* Стилі для рейтингу */
 .rating-input {
+    display: flex;
+    align-items: center;
+    gap: 35px;
     margin-bottom: 15px;
+    direction: ltr;
 }
+
 
 .stars {
-    display: inline-flex;
-    gap: 5px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    gap: 8px;
 }
 
-input[type="radio"].star {
+.stars input[type="radio"] {
     display: none;
+}
+
+.stars label.star {
+    cursor: pointer;
+    font-size: 30px;
+    color: #ddd;
+    transition: color 0.2s;
+}
+
+.stars label.star:hover,
+.stars label.star:hover ~ label.star {
+    color: #ffd700;
+}
+
+.stars input[type="radio"]:checked ~ label.star {
+    color: #ffd700;
 }
 
 .star {
@@ -300,10 +323,16 @@ input[type="radio"].star {
     font-size: 24px;
     color: #ddd;
     transition: color 0.2s;
+    order: {{ i }};
 }
 
 input[type="radio"]:checked ~ .star,
-.star:hover {
+.star:hover,
+.star:hover ~ .star {
+    color: #ffd700;
+}
+
+input[type="radio"]:checked + .star {
     color: #ffd700;
 }
 

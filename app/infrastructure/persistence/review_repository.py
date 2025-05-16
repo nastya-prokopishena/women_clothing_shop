@@ -1,6 +1,7 @@
 from app.domain.models import Review
 from app.extensions import mongo
 from datetime import datetime
+from random import sample, random
 
 
 class ReviewRepository:
@@ -52,9 +53,19 @@ class ReviewRepository:
         return Review(
             id=str(data['_id']),
             product_id=str(data['product_id']),
-            user_name=data.get('author', 'Гість'),  # Використовуємо 'author' замість 'user_name'
+            user_name=data.get('author', 'Гість'),
             text=data['text'],
             created_at=data['created_at'],
             rating=data.get('rating', 0),
             images=data.get('images', [])
         )
+
+    def get_random_reviews(self, limit=10):
+        all_reviews = list(self.collection.find())
+
+        if len(all_reviews) <= limit:
+            reviews_data = all_reviews
+        else:
+            reviews_data = sample(all_reviews, limit)
+
+        return [self._map_to_review(r) for r in reviews_data]

@@ -38,27 +38,23 @@
         {% endif %}
     </div>
 
-    <!-- Пагінація -->
+<!-- Пагінація -->
     {% if pagination and pagination.pages > 1 %}
-    <div class="pagination">
+    <div class="custom-pagination">
         {% if pagination.has_prev %}
-            <a href="{{ url_for(request.endpoint, page=pagination.prev_num, **request.view_args) }}">&laquo;</a>
+            <a href="{{ url_for(request.endpoint, page=pagination.prev_num, **request.view_args) }}" class="page-arrow">‹</a>
         {% endif %}
 
-        {% for page in pagination.iter_pages() %}
-            {% if page %}
-                {% if page == pagination.page %}
-                    <span class="current">{{ page }}</span>
-                {% else %}
-                    <a href="{{ url_for(request.endpoint, page=page, **request.view_args) }}">{{ page }}</a>
-                {% endif %}
+        {% for page_num in range(1, pagination.pages + 1) %}
+            {% if page_num == pagination.page %}
+                <span class="current-page">{{ page_num }}</span>
             {% else %}
-                <span>...</span>
+                <a href="{{ url_for(request.endpoint, page=page_num, **request.view_args) }}">{{ page_num }}</a>
             {% endif %}
         {% endfor %}
 
         {% if pagination.has_next %}
-            <a href="{{ url_for(request.endpoint, page=pagination.next_num, **request.view_args) }}">&raquo;</a>
+            <a href="{{ url_for(request.endpoint, page=pagination.next_num, **request.view_args) }}" class="page-arrow">›</a>
         {% endif %}
     </div>
     {% endif %}

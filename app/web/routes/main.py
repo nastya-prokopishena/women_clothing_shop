@@ -2,6 +2,8 @@ from flask import render_template, abort, request
 from app.application.services.home_page_service import HomePageService
 from app.infrastructure.persistence.category_repository import CategoryRepository
 from app.infrastructure.persistence.product_repository import ProductRepository
+
+
 def init_main_routes(app):
     @app.route('/', endpoint='home')
     def home_page():
@@ -19,8 +21,9 @@ def init_main_routes(app):
                                featured_products=data['featured_products'],
                                new_arrivals=data['new_arrivals'],
                                categories=data['featured_categories'],
-                               reviews=data['recent_reviews'],
-                               benefits=benefits)
+                               reviews=data['reviews'],
+                               benefits=benefits,
+                               )
 
     @app.route('/catalog', endpoint='catalog_all')
     def catalog_all():
@@ -28,16 +31,30 @@ def init_main_routes(app):
         product_repo = ProductRepository()
         all_categories = category_repo.find_all_with_counts()
 
+        # Пагінація
         page = request.args.get('page', 1, type=int)
         per_page = 12
 
         products_data = product_repo.find_paginated(page=page, per_page=per_page)
 
+        # Створюємо об'єкт пагінації
+        pagination = {
+            'page': page,
+            'per_page': per_page,
+            'total': products_data['total'],
+            'pages': (products_data['total'] + per_page - 1) // per_page,
+            'items': products_data['items'],
+            'has_prev': page > 1,
+            'has_next': page < (products_data['total'] + per_page - 1) // per_page,
+            'prev_num': page - 1,
+            'next_num': page + 1
+        }
+
         return render_template('catalog.html',
                                category=None,
                                categories=all_categories,
                                products=products_data['items'],
-                               pagination=products_data)
+                               pagination=pagination)
 
     @app.route('/catalog/<slug>', endpoint='category')
     def category_page(slug):
@@ -49,6 +66,7 @@ def init_main_routes(app):
         if not category:
             abort(404)
 
+        # Пагінація
         page = request.args.get('page', 1, type=int)
         per_page = 12
 
@@ -58,8 +76,21 @@ def init_main_routes(app):
             category_slug=slug
         )
 
+        # Створюємо об'єкт пагінації
+        pagination = {
+            'page': page,
+            'per_page': per_page,
+            'total': products_data['total'],
+            'pages': (products_data['total'] + per_page - 1) // per_page,
+            'items': products_data['items'],
+            'has_prev': page > 1,
+            'has_next': page < (products_data['total'] + per_page - 1) // per_page,
+            'prev_num': page - 1,
+            'next_num': page + 1
+        }
+
         return render_template('catalog.html',
                                category=category,
                                categories=all_categories,
                                products=products_data['items'],
-                               pagination=products_data)
+                               pagination=pagination)

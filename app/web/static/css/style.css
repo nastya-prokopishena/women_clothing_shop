@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -37,7 +41,7 @@ header {
     width: 100%;
     max-width: 1300px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 px;
     box-sizing: border-box;
 }
 
@@ -101,6 +105,7 @@ header {
     height: 100%;
     object-fit: cover;
     display: block;
+    margin: 0;
     filter: brightness(0.8) contrast(1.1) saturate(0.8);
 }
 
@@ -329,35 +334,37 @@ header {
     background: rgba(255,255,255,0.95);
 }
 
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin: 40px 0;
-    gap: 10px;
-}
-
-.pagination a, .pagination span {
-    padding: 8px 15px;
-    border: 1px solid #ddd;
-    color: #333;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-}
-
-.pagination a:hover {
-    background: #f1f1f1;
-}
-
-.pagination .current {
-    background: #7c6f64;
-    color: white;
-    border-color: #7c6f64;
-}
 
 .price {
     color: #7c6f64;
     font-weight: bold;
+}
+.reviews-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    gap: 20px;
+    padding: 20px 0;
+    margin: 0 auto;
+    max-width: 1200px;
+    scrollbar-width: none; /* Для Firefox */
+}
+
+.reviews-slider::-webkit-scrollbar {
+    display: none; /* Для Chrome/Safari */
+}
+
+.reviews-slider .review-card {
+    background: #f9f7f4;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    text-align: left;
+    scroll-snap-align: start;
+    flex: 0 0 300px;
+    transition: transform 0.3s ease;
 }
 
 /* Відгуки */
@@ -367,21 +374,50 @@ header {
 }
 
 .reviews-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
-    margin-top: 20px;
+    margin-top: 30px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.review-card {
-    background: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    width: 250px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+.review-card:hover {
+    transform: translateY(-5px);
 }
 
+.review-rating {
+    margin-bottom: 15px;
+}
+
+.star {
+    color: #ddd;
+    font-size: 18px;
+}
+
+.star.filled {
+    color: #ffd700;
+}
+
+.review-text {
+    font-style: italic;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.review-author {
+    color: #7c6f64;
+    font-weight: 600;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .reviews-grid {
+        grid-template-columns: 1fr;
+    }
+}
 /* Переваги */
 .advantages {
     text-align: center;
@@ -422,3 +458,161 @@ footer {
     color: #7c6f64;
 }
 
+.custom-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 30px 0;
+}
+
+.custom-pagination a,
+.custom-pagination span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.custom-pagination a {
+    color: #333;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.custom-pagination a:hover {
+    background-color: #f5f5f5;
+}
+
+.custom-pagination .current-page {
+    background-color: #000;
+    color: white;
+    font-weight: 500;
+}
+
+.custom-pagination .page-arrow {
+    border: none;
+    font-size: 18px;
+}
+
+.featured-products {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.products-slider {
+    display: flex;
+    overflow: hidden;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.products-slider::-webkit-scrollbar {
+    display: none;
+}
+
+/* Стилі для карток продуктів у слайдері */
+#featured-products-slider .product-card {
+    scroll-snap-align: start;
+    flex: 0 0 180px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+
+#featured-products-slider .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+#featured-products-slider .product-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+#featured-products-slider .product-title {
+    font-size: 14px;
+    margin: 8px 0 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#featured-products-slider .product-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin: 5px 0;
+}
+
+#featured-products-slider .product-rating {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+#featured-products-slider .star {
+    color: #ddd;
+    font-size: 14px;
+    margin-right: 2px;
+}
+
+#featured-products-slider .star.filled {
+    color: #ffd700;
+}
+
+#featured-products-slider .reviews-count {
+    font-size: 12px;
+    color: #777;
+    margin-left: 5px;
+}
+
+/* Кнопки слайдера */
+.slider-controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.slider-controls button {
+    font-size: 24px;
+    padding: 10px 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.slider-controls button:hover {
+    color: #7c6f64;
+}
+
+.slider-prev:hover, .slider-next:hover {
+    background: #f5f5f5;
+}
+
+@media (max-width: 768px) {
+    #featured-products-slider .product-card {
+        flex: 0 0 150px;
+    }
+
+    #featured-products-slider .product-image {
+        height: 150px;
+    }
+
+    .featured-products {
+        padding: 0 20px;
+    }
+}
