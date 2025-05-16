@@ -6,7 +6,6 @@ from urllib.parse import quote_plus
 from pymongo.errors import ConnectionFailure, OperationFailure
 import sys
 
-
 def create_app():
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
     TEMPLATE_DIR = os.path.join(BASE_DIR, 'web', 'templates')
@@ -65,6 +64,7 @@ def create_app():
     init_main_routes(app)
 
     print("\n=== Application initialized successfully ===")
+
     return app
 
 
