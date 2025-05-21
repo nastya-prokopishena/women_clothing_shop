@@ -28,8 +28,7 @@
                         <li><a href="{{ url_for('auth.register') }}">Реєстрація</a></li>
                         <li><a href="{{ url_for('auth.login') }}">Вхід</a></li>
                     {% endif %}
-                    <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Кошик</a></li>
-                </ul>
+                        <li><a href="{{ url_for('cart_bp.view_cart_page') }}"><i class="fas fa-shopping-cart"></i> Кошик </a></li>                </ul>
             </div>
         </nav>
     </header>

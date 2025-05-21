@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/product_page.css') }}">
 
+{# Скрипт для обробки вибору опцій товару (колір, розмір) #}
+<script src="{{ url_for('static', filename='js/product_options.js') }}"></script>
+
 <div class="product-container">
-    <!-- Галерея зображень -->
     <div class="product-gallery">
         {% if product.images %}
             <img id="main-image" src="{{ url_for('static', filename='images/' ~ product.images[0]) }}" alt="{{ product.name }}">
@@ -20,33 +21,53 @@
         {% endif %}
     </div>
 
-    <!-- Інформація про товар -->
     <div class="product-info">
         <h1>{{ product.name }}</h1>
         <div class="price-section">
             <span class="price">{{ product.price }} грн</span>
         </div>
 
+        {# ФОРМА ДЛЯ ДОДАВАННЯ В КОШИК #}
+        <form method="POST" action="{{ url_for('cart_bp.add_to_cart') }}"> {# Правильний endpoint #}
+            {# Приховане поле для ID товару #}
+            <input type="hidden" name="product_id" value="{{ product.product_id }}">
 
-        <div class="attributes">
-            <div class="colors">
-                <span>Кольори:</span>
-                {% for color in product.attributes.colors %}
-                    <div class="color-box" style="background-color: {{ color }}"></div>
-                {% endfor %}
+            <div class="attributes">
+                {# Вибір кольору #}
+                {% if product.attributes.colors %}
+                <div class="colors">
+                    <span>Кольори:</span>
+                    {% for color in product.attributes.colors %}
+                        {# Радіокнопки для вибору кольору. JS має обробляти вибір через клік по label. #}
+                        <input type="radio" name="color" value="{{ color }}" id="color-{{loop.index}}" {% if loop.first %}checked{% endif %} style="display:none;">
+                        <label for="color-{{loop.index}}" class="color-box" style="background-color: {{ color }}" title="{{ color }}"></label>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {# Вибір розміру #}
+                {% if product.attributes.sizes %}
+                <div class="sizes">
+                    <span>Розміри:</span>
+                    {% for size in product.attributes.sizes %}
+                        {# Радіокнопки для вибору розміру. JS має обробляти вибір через клік по label. #}
+                        <input type="radio" name="size" value="{{ size }}" id="size-{{loop.index}}" {% if loop.first %}checked{% endif %} style="display:none;">
+                        <label for="size-{{loop.index}}" class="size-button">{{ size }}</label>
+                    {% endfor %}
+                </div>
+                {% endif %}
             </div>
 
-            <div class="sizes">
-                <span>Розміри:</span>
-                {% for size in product.attributes.sizes %}
-                    <button class="size-button">{{ size }}</button>
-                {% endfor %}
+            {# Поле для кількості #}
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label for="quantity" style="display: block; margin-bottom: 8px; font-weight: 500;">Кількість:</label>
+                <input type="number" name="quantity" value="1" min="1" style="width: 70px; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
             </div>
-        </div>
 
-        <button class="add-to-cart">Додати в кошик</button>
+            <button type="submit" class="add-to-cart">Додати в кошик</button>
+        </form>
+        {# КІНЕЦЬ ФОРМИ ДЛЯ ДОДАВАННЯ В КОШИК #}
 
-        <!-- Акордіони -->
         <div class="accordions">
             {% if product.care %}
             <div class="accordion">
@@ -71,98 +92,69 @@
             </div>
         </div>
 
+        <div class="comments-section">
+            <h2>Відгуки ({{ comments|length }})</h2>
 
-        <!-- Секція коментарів -->
-<div class="comments-section">
-    <h2>Відгуки ({{ comments|length }})</h2>
+            {% if average_rating %}
+            <div class="average-rating">
+                Середня оцінка: {{ average_rating|round(1) }} / 5
+            </div>
+            {% endif %}
 
-    <!-- Середня оцінка -->
-    {% if average_rating %}
-    <div class="average-rating">
-        Середня оцінка: {{ average_rating|round(1) }} / 5
-    </div>
-    {% endif %}
+            {# Форма для додавання коментаря, використовує endpoint 'add_comment' #}
+            <form class="comment-form" method="POST" action="{{ url_for('add_comment', product_id=product.product_id) }}">
+                <div class="rating-input">
+                    <span>Оцінка:</span>
+                    <div class="stars">
+                        {% for i in range(5, 0, -1) %}
+                            <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" required>
+                            <label for="star{{ i }}" class="star">★</label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <label for="comment" class="visually-hidden">Ваш коментар</label>
+                <textarea id="comment" name="comment" placeholder="Залишити коментар..." required></textarea>
+                <button type="submit">Відправити</button>
+            </form>
 
-    <!-- Форма додавання коментаря -->
-    <form class="comment-form" method="POST" action="{{ url_for('add_comment', product_id=product.product_id) }}">
-        <!-- Рейтинг -->
-        <div class="rating-input">
-            <span>Оцінка:</span>
-            <div class="stars">
-                {% for i in range(5, 0, -1) %}
-                    <input
-                        type="radio"
-                        id="star{{ i }}"
-                        name="rating"
-                        value="{{ i }}"
-                        required
-                    >
-                    <label for="star{{ i }}" class="star">★</label>
+            <div class="comments-list">
+                {% for comment in comments %}
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="author">{{ comment.author }}</span>
+                        <span class="date">{{ comment.date }}</span>
+                    </div>
+                    <div class="comment-rating">
+                        {% for _ in range(comment.rating) %}★{% endfor %}
+                    </div>
+                    <p class="text">{{ comment.text }}</p>
+                </div>
+                {% else %}
+                <p>Ще немає відгуків. Будьте першим!</p>
                 {% endfor %}
             </div>
         </div>
 
-        <!-- Коментар -->
-        <label for="comment" class="visually-hidden">Ваш коментар</label>
-        <textarea
-            id="comment"
-            name="comment"
-            placeholder="Залишити коментар..."
-            required
-        ></textarea>
-
-        <button type="submit">Відправити</button>
-    </form>
-
-    <!-- Список коментарів зі скролом -->
-    <div class="comments-list">
-        {% for comment in comments %}
-        <div class="comment">
-            <div class="comment-header">
-                <span class="author">{{ comment.author }}</span>
-                <span class="date">{{ comment.date }}</span>
+        {% if related_products %}
+            <div class="related-products">
+                <h2>Рекомендовані товари</h2>
+                <div class="products-grid">
+                    {% for product_item in related_products %}
+                        <a href="{{ url_for('product_page', product_id=product_item.product_id) }}" class="product-card-link">
+                            <div class="product-card">
+                                {% if product_item.images %}
+                                    <img src="{{ url_for('static', filename='images/' ~ product_item.images[0]) }}" alt="{{ product_item.name }}">
+                                {% else %}
+                                    <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="Зображення відсутнє">
+                                {% endif %}
+                                <h3>{{ product_item.name }}</h3>
+                                <p>{{ product_item.price }} грн</p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
             </div>
-            <!-- Відображення рейтингу -->
-            <div class="comment-rating">
-                {% for _ in range(comment.rating) %}★{% endfor %}
-            </div>
-            <p class="text">{{ comment.text }}</p>
-        </div>
-        {% else %}
-        <p>Ще немає відгуків. Будьте першим!</p>
-        {% endfor %}
-    </div>
-</div>
-
-<!-- Схожі товари -->
-{% if related_products %}
-    <div class="related-products">
-        <h2>Рекомендовані товари</h2>
-        <div class="products-grid">
-            {% for product in related_products %}
-                <!-- Додано посилання на сторінку товару -->
-                <a
-                    href="{{ url_for('product_page', product_id=product.product_id) }}"
-                    class="product-card-link"
-                >
-                    <div class="product-card">
-                        {% if product.images %}
-                            <img
-                                src="{{ url_for('static', filename='images/' ~ product.images[0]) }}"
-                                alt="{{ product.name }}"
-                            >
-                        {% else %}
-                            <img
-                                src="{{ url_for('static', filename='images/placeholder.jpg') }}"
-                                alt="Зображення відсутнє"
-                            >
-                        {% endif %}
-                        <h3>{{ product.name }}</h3>
-                        <p>{{ product.price }} грн</p>
-                    </div>
-                </a>
-            {% endfor %}
-        </div>
-    </div>
-{% endif %}
+        {% endif %}
+    </div> {# Кінець .product-info #}
+</div> {# Кінець .product-container #}
 {% endblock %}

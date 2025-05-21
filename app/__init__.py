@@ -4,9 +4,14 @@ from app.extensions import mongo
 from app.web.routes.auth import bp as auth_bp
 import os
 from app.extensions import mail
+from .web.routes.checkout import checkout_bp # Імпорт
+
 from urllib.parse import quote_plus
 from pymongo.errors import ConnectionFailure, OperationFailure
 import sys
+
+from app.web.routes.cart import cart_bp
+
 
 def create_app():
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -20,6 +25,8 @@ def create_app():
 
     # Підключаємо Blueprint для auth
     app.register_blueprint(auth_bp)
+    app.register_blueprint(cart_bp)
+    app.register_blueprint(checkout_bp)
 
     print("\n=== Initializing MongoDB Connection ===")
     print(f"Using MONGO_URI: {app.config['MONGO_URI']}")
