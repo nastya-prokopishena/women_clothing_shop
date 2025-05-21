@@ -154,7 +154,8 @@ class TestMainRoutes:
             )
 
     def test_category_page_not_found(self, client):
-        with patch('app.web.routes.main.CategoryRepository') as mock_cat_repo:
+        with patch('app.web.routes.main.CategoryRepository') as mock_cat_repo, \
+                patch('app.web.routes.main.ProductRepository') as mock_prod_repo:
             mock_cat_repo.return_value.find_by_slug.return_value = None
 
             response = client.get('/catalog/nonexistent')
@@ -163,9 +164,9 @@ class TestMainRoutes:
 
     def test_pagination_logic(self):
         test_cases = [
-            (1, 12, 10, 1),  # 10 items, 1 page
-            (1, 10, 25, 3),  # 25 items, 3 pages
-            (2, 5, 13, 3),  # 13 items, 3 pages
+            (1, 12, 10, 1),
+            (1, 10, 25, 3),
+            (2, 5, 13, 3),
         ]
 
         for page, per_page, total, expected_pages in test_cases:

@@ -1,7 +1,7 @@
 from app.domain.services.email_service import send_reset_email
 from app.infrastructure.persistence.user_repository import UserRepository
 from app.domain.services.user_service import UserService
-from flask import current_app
+from flask import current_app, session
 from itsdangerous import URLSafeTimedSerializer
 
 user_service = UserService()
@@ -29,8 +29,14 @@ def login_user(form):
     user = repo.find_by_email(email)
     if not user or not user_service.check_password(password, user.password_hash):
         return False, 'Неправильна пошта або пароль.', {}
-    return True,  None, {'user_id': str(user._id), 'user_name': user.name,
-                                                    'user_email': user.email}
+
+    session['user_id'] = str(user._id)
+
+    return True, None, {
+        'user_id': str(user._id),
+        'user_name': user.name,
+        'user_email': user.email
+    }
 
 
 def get_user_profile(email):
