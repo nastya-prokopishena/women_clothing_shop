@@ -140,11 +140,27 @@
         <h2>Рекомендовані товари</h2>
         <div class="products-grid">
             {% for product in related_products %}
-                <div class="product-card">
-                    <img src="{{ product.images[0] if product.images else '/static/images/placeholder.jpg' }}" alt="{{ product.name }}">
-                    <h3>{{ product.name }}</h3>
-                    <p>{{ product.price }} грн</p>
-                </div>
+                <!-- Додано посилання на сторінку товару -->
+                <a
+                    href="{{ url_for('product_page', product_id=product.product_id) }}"
+                    class="product-card-link"
+                >
+                    <div class="product-card">
+                        {% if product.images %}
+                            <img
+                                src="{{ url_for('static', filename='images/' ~ product.images[0]) }}"
+                                alt="{{ product.name }}"
+                            >
+                        {% else %}
+                            <img
+                                src="{{ url_for('static', filename='images/placeholder.jpg') }}"
+                                alt="Зображення відсутнє"
+                            >
+                        {% endif %}
+                        <h3>{{ product.name }}</h3>
+                        <p>{{ product.price }} грн</p>
+                    </div>
+                </a>
             {% endfor %}
         </div>
     </div>

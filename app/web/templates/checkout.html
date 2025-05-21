@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Оформлення замовлення{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/checkout.css') }}">
+
+<div class="checkout-container">
+    <!-- Ліва колонка: форма -->
+    <div class="checkout-form">
+        <h1 class="checkout-title">Оформлення замовлення</h1>
+
+        <form method="POST">
+            <!-- Контактні дані -->
+            <div class="form-group">
+                <label>Ім'я</label>
+                <input type="text" name="first_name" required>
+            </div>
+            <div class="form-group">
+                <label>Прізвище</label>
+                <input type="text" name="last_name" required>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label>Телефон</label>
+                <input type="tel" name="phone" required>
+            </div>
+
+            <!-- Адреса доставки -->
+            <div class="form-group">
+                <label>Область</label>
+                <input type="text" name="region" required>
+            </div>
+            <div class="form-group">
+                <label>Місто</label>
+                <input type="text" name="city" required>
+            </div>
+            <div class="form-group">
+                <label>Відділення/Поштомат</label>
+                <input type="text" name="post_office" required>
+            </div>
+
+            <!-- Спосіб оплати -->
+            <div class="form-group">
+                <label>Спосіб оплати</label>
+                <div class="select-wrapper">
+                    <select name="payment_method">
+                        <option value="monopay">MonoPay</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="pay-button">Оплатити замовлення</button>
+        </form>
+    </div>
+
+    <!-- Права колонка: підсумок -->
+    <div class="order-summary">
+        <h2>Ваше замовлення</h2>
+        <div class="summary-item">
+            <span>Проміжний підсумок:</span>
+            <span>{{ subtotal }} грн</span>
+        </div>
+        <div class="summary-item">
+            <span>Вартість доставки:</span>
+            <span>{{ delivery_price }} грн</span>
+        </div>
+        <div class="summary-item">
+            <span>Комісія:</span>
+            <span>{{ fee }} грн</span>
+        </div>
+        <div class="summary-item discount">
+            <span>Знижка:</span>
+            <span>-{{ discount }} грн</span>
+        </div>
+        <div class="summary-item total">
+            <span>Разом:</span>
+            <span>{{ total }} грн</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

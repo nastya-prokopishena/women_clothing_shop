@@ -1,0 +1,127 @@
+/* Виправлення для хедера */
+header {
+    position: relative !important; /* Вимкнути фіксовану позицію, якщо вона є */
+}
+
+.checkout-container {
+    display: flex;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.checkout-title {
+    margin-top: 0;
+    font-size: 28px;
+    color: #5a4b3f;
+    margin-bottom: 30px;
+}
+
+.checkout-form {
+    flex: 1;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* Випадаюче меню */
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    pointer-events: none;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    appearance: none;
+    background: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Кнопка оплати */
+.pay-button {
+    width: 100%;
+    padding: 15px;
+    background: #7c6f64;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.3s;
+}
+
+.pay-button:hover {
+    background: #5a4b3f;
+}
+
+/* Права колонка */
+.order-summary {
+    flex: 0 0 350px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.order-summary h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #5a4b3f;
+    margin-bottom: 25px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.summary-item.total {
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    padding-top: 20px;
+}
+
+.summary-item.discount span {
+    color: #4CAF50; /* Колір для знижки */
+}
