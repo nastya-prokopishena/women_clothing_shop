@@ -458,3 +458,21 @@ input[type="radio"]:checked + .star {
         height: 50px;
     }
 }
+
+@media (max-width: 540px) {
+    .rating-input {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    #rating-warning {
+        margin-top: 0;
+        order: 3; 
+        width: 100%;
+    }
+
+    .stars {
+        margin-bottom: 10px;
+    }
+}
