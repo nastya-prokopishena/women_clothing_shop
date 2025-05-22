@@ -112,6 +112,12 @@ body {
     border-color: #555;
 }
 
+.color-box.selected,
+.size-button.selected {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+}
+
 
 .size-button {
     padding: 10px 15px;
