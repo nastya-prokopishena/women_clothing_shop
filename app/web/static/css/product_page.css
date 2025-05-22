@@ -282,6 +282,32 @@ body {
     float: right;
 }
 
+/* Повідомлення про помилку оцінки */
+#rating-warning {
+    display: none;
+    color: #d93025;
+    font-size: 14px;
+    margin-top: 8px;
+    font-weight: 500;
+    background-color: #fce8e6;
+    padding: 10px 12px;
+    border-left: 4px solid #d93025;
+    border-radius: 4px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Анімація появи */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .comment-form button:hover {
     background: #5a4b3f;
 }
