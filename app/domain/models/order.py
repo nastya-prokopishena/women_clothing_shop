@@ -1,7 +1,6 @@
 from datetime import datetime
 from typing import List, Optional
 
-
 class OrderItem:
     def __init__(self, product_id: str, quantity: int, price: float, size: str, color: str):
         self.product_id = product_id

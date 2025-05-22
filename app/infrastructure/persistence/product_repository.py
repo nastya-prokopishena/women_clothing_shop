@@ -8,6 +8,28 @@ class ProductRepository:
     def __init__(self):
         self.collection = mongo.db.products
 
+    def decrease_stock(self, product_id: str, quantity_to_decrease: int) -> bool:
+        """
+        Зменшує кількість товару на складі.
+        Повертає True, якщо операція успішна, False - якщо товару недостатньо.
+        """
+        if not ObjectId.is_valid(product_id):
+            return False  # Або викликати виняток
+
+        # Атомарне оновлення: зменшуємо stock, тільки якщо stock >= quantity_to_decrease
+        result = self.collection.update_one(
+            {'_id': ObjectId(product_id), 'stock': {'$gte': quantity_to_decrease}},
+            {'$inc': {'stock': -quantity_to_decrease}}
+        )
+        return result.modified_count > 0
+
+    def get_stock(self, product_id: str) -> Optional[int]:
+        """Отримує поточну кількість товару на складі."""
+        if not ObjectId.is_valid(product_id):
+            return None
+        product_data = self.collection.find_one({'_id': ObjectId(product_id)}, {'stock': 1})
+        return product_data.get('stock') if product_data else None
+
     def _ensure_collection(self):
         """Перевіряє наявність колекції"""
         if self.collection is None:
@@ -126,3 +148,4 @@ class ProductRepository:
 
         top_rated_products = list(self.collection.aggregate(pipeline))
         return [self._map_to_product(p) for p in top_rated_products]
+
