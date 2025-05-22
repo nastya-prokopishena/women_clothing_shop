@@ -3,6 +3,7 @@ from app.application.services.user_page_service import (register_user, login_use
                                                         change_user_password, add_user_address, delete_user_address,
                                                         update_user_phone, request_password_reset, generate_serializer,
                                                         update_user_surname)
+from app.application.services.order_service import OrderService
 
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -87,7 +88,12 @@ def profile():
         return redirect(url_for('auth.profile'))
 
     addresses = user_data.get("addresses", [])
-    return render_template('profile.html', **user_data)
+
+    # Отримати замовлення користувача
+    order_service = OrderService()
+    user_orders = order_service.get_orders_by_user_id(user_email)
+
+    return render_template('profile.html', **user_data, orders=user_orders)
 
 
 @bp.route('/logout')

@@ -5,6 +5,7 @@ from app.web.routes.auth import bp as auth_bp
 import os
 from app.extensions import mail
 from .web.routes.checkout import checkout_bp # Імпорт
+from .web.routes.order import profile_bp, order_bp
 
 from urllib.parse import quote_plus
 from pymongo.errors import ConnectionFailure, OperationFailure
@@ -27,6 +28,8 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(cart_bp)
     app.register_blueprint(checkout_bp)
+    app.register_blueprint(profile_bp)
+    app.register_blueprint(order_bp)
 
     print("\n=== Initializing MongoDB Connection ===")
     print(f"Using MONGO_URI: {app.config['MONGO_URI']}")

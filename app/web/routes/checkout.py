@@ -89,7 +89,7 @@ def checkout():
 
             session['last_order_id_for_confirmation'] = created_order_id  # Зберігаємо ID для сторінки підтвердження
             session.pop('order_details', None)  # Видаляємо старі тимчасові деталі, якщо вони були
-            return redirect(url_for('checkout.order_confirmation'))
+            return redirect(url_for('auth.profile') + '?tab=orders')
         else:
             # Якщо створення замовлення не вдалося (наприклад, товару немає на складі)
             flash(f"Помилка при створенні замовлення: {order_message}", "error")

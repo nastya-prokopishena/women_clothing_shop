@@ -70,10 +70,8 @@
 
             <div id="orders" style="display: none;">
                 <h2>Мої замовлення</h2>
-                <ul>
-                    <li>Замовлення 1</li>
-                    <li>Замовлення 2</li>
-                </ul>
+                <div id="orders-list">
+                </div>
             </div>
 
             <div id="delivery-addresses" style="display: none;">
@@ -127,19 +125,55 @@
     </div>
 </section>
 
+
 <script>
     function showSection(sectionId, element) {
+        // Приховуємо всі секції
         document.querySelectorAll('.profile-info > div').forEach(function(div) {
             div.style.display = 'none';
         });
 
+        // Показуємо потрібну секцію
         document.getElementById(sectionId).style.display = 'block';
 
+        // Активуємо відповідне меню
         document.querySelectorAll('.profile-nav a').forEach(function(link) {
             link.classList.remove('active');
         });
-
         element.classList.add('active');
+
+        // Якщо показуємо замовлення — завантажуємо їх через fetch
+        if (sectionId === 'orders') {
+            fetch('/profile/orders')  // URL підлаштуй під свій бекенд
+                .then(response => response.json())
+                .then(data => {
+                    const ordersList = document.getElementById('orders-list');
+                    ordersList.innerHTML = ''; // очищуємо список
+
+                    if (data.success) {
+                        if (data.orders.length === 0) {
+                            ordersList.innerHTML = '<p>У вас поки немає замовлень.</p>';
+                        } else {
+                            data.orders.forEach((order, index) => {
+                                const orderEl = document.createElement('div');
+                                orderEl.classList.add('order-item');
+                                orderEl.innerHTML = `
+                                    <p><strong>Замовлення №${index + 1}</strong></p>
+                                    <p>Сума: ${order.total_amount} грн</p>
+                                    <p>Дата: ${order.created_at ? new Date(order.created_at).toLocaleString() : 'Невідомо'}</p>
+                                    <hr>
+                                `;
+                                ordersList.appendChild(orderEl);
+                            });
+                        }
+                    } else {
+                        ordersList.innerHTML = `<p>Не вдалося завантажити замовлення: ${data.message}</p>`;
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('orders-list').innerHTML = '<p>Помилка при завантаженні замовлень.</p>';
+                });
+        }
     }
 
     function toggleAddressDropdown() {
@@ -147,7 +181,26 @@
         dropdown.style.display = (dropdown.style.display === 'none' || dropdown.style.display === '') ? 'block' : 'none';
     }
 
+    // Функція для читання параметрів з URL
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
+        const tab = getQueryParam('tab');
+
+        if (tab) {
+            const navLinks = document.querySelectorAll('.profile-nav a');
+            // Знаходимо посилання, яке має показувати потрібну вкладку
+            for (const link of navLinks) {
+                if (link.getAttribute('onclick')?.includes(`'${tab}'`)) {
+                    showSection(tab, link);
+                    return;
+                }
+            }
+        }
+        // Якщо параметр не заданий, показуємо дефолтний таб
         showSection('account-data', document.querySelector('.profile-nav a'));
     });
 </script>

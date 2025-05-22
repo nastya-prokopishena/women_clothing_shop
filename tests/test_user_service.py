@@ -11,26 +11,29 @@ from app.domain.models import User
 class TestUserPageService(unittest.TestCase):
 
     def setUp(self):
-        # Створюємо патчери
+        # створюємо патчери
         self.user_repo_patcher = patch('app.application.services.user_page_service.UserRepository')
         self.user_service_patcher = patch('app.application.services.user_page_service.user_service')
         self.send_reset_email = patch('app.application.services.user_page_service.send_reset_email')
         self.generate_serializer = patch('app.application.services.user_page_service.generate_serializer')
         self.hash_password = patch('app.application.services.user_page_service.user_service.hash_password')
+        self.session_patcher = patch('app.application.services.user_page_service.session', new_callable=dict)
 
-        # Стартується патч і зберігається мок
+        # стартується патч і зберігається мок
         self.mock_user_repo = self.user_repo_patcher.start()
         self.mock_user_service = self.user_service_patcher.start()
         self.send_reset_email = self.send_reset_email.start()
         self.generate_serializer = self.generate_serializer.start()
         self.hash_password = self.hash_password.start()
+        self.mock_session = self.session_patcher.start()
 
-        # Не забути додати зупинку патчів
+        # зупинка патчів
         self.addCleanup(self.user_repo_patcher.stop)
         self.addCleanup(self.user_service_patcher.stop)
         self.addCleanup(self.send_reset_email.stop)
         self.addCleanup(self.generate_serializer.stop)
         self.addCleanup(self.hash_password.stop)
+        self.addCleanup(self.session_patcher.stop)
 
     # ----------- РЕЄСТРАЦІЯ -----------
     def test_register_user_success(self):
@@ -73,15 +76,19 @@ class TestUserPageService(unittest.TestCase):
         repo = self.mock_user_repo.return_value
         user_mock = MagicMock()
         user_mock.password_hash = 'hashedpassword'
+        user_mock._id = 'someid'
+        user_mock.name = 'John'
+        user_mock.email = 'john@example.com'
         repo.find_by_email.return_value = user_mock
 
-        with patch('app.application.services.user_page_service.user_service') as mock_service:
-            mock_service.check_password.return_value = True
-            form = {'email': 'john@example.com', 'password': '1234'}
-            success, msg, data = login_user(form)
-            self.assertTrue(success)
-            self.assertIsNone(msg)
-            self.assertIn('user_id', data)
+        self.mock_user_service.check_password.return_value = True
+        form = {'email': 'john@example.com', 'password': '1234'}
+        success, msg, data = login_user(form)
+
+        self.assertTrue(success)
+        self.assertIsNone(msg)
+        self.assertIn('user_id', data)
+        self.assertEqual(self.mock_session['user_id'], 'someid')
 
     def test_login_user_wrong_password(self):
         """Тестує вхід користувача з неправильним паролем.

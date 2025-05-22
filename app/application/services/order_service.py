@@ -114,3 +114,6 @@ class OrderService:
 
     def get_order_details_for_confirmation(self, order_id: str) -> Optional[Order]:
         return self.order_repo.get_by_id(order_id)
+
+    def get_orders_by_user_id(self, user_id: str) -> List[Order]:
+        return self.order_repo.get_orders_by_user_id(user_id)

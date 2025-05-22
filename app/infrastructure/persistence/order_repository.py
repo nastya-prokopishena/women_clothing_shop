@@ -31,7 +31,7 @@ class OrderRepository:
     def save(self, order: Order) -> str:
         """Зберігає нове замовлення в базу даних та повертає його ID."""
         order_doc = {
-            'user_id': order.user_id,  # Припускаємо, що модель Order обробляє ObjectId або None
+            'user_id': str(order.user_id),  # Припускаємо, що модель Order обробляє ObjectId або None
             'items': [self._order_item_to_dict(item) for item in order.items],
             'total_amount': order.total_amount,
             # 'subtotal_amount': order.subtotal_amount, # Якщо subtotal_amount є в моделі Order
@@ -62,11 +62,11 @@ class OrderRepository:
         result = self.collection.insert_one(order_doc)
         return str(result.inserted_id)
 
-    def get_by_id(self, order_id: str) -> Optional[Order]:
+    def get_by_id(self, _id: str) -> Optional[Order]:
         """Отримує замовлення за його ID."""
-        if not ObjectId.is_valid(order_id):
+        if not ObjectId.is_valid(_id):
             return None
-        data = self.collection.find_one({'_id': ObjectId(order_id)})
+        data = self.collection.find_one({'_id': ObjectId(_id)})
         if not data:
             return None
 
@@ -116,3 +116,34 @@ class OrderRepository:
         # Або якщо він завжди розраховується в __init__ моделі Order, то цей блок не потрібен.
 
         return order_instance
+
+    def get_orders_by_user_id(self, user_id: str) -> List[Order]:
+        """Повертає список замовлень користувача за user_id."""
+        orders_data = self.collection.find({'user_id': user_id}).sort('created_at', -1)
+        orders = []
+
+        for data in orders_data:
+            items = [self._map_to_order_item(item_data) for item_data in data.get('items', [])]
+            order = Order(
+                _id=data.get('_id'),
+                user_id=str(data.get('user_id')) if data.get('user_id') else None,
+                items=items,
+                total_amount=data.get('total_amount'),
+                shipping_address=data.get('shipping_address'),
+                payment_method=data.get('payment_method'),
+                delivery_method=data.get('delivery_method', "Нова Пошта"),
+                delivery_cost=data.get('delivery_cost', 0.0),
+                status=data.get('status', "processing"),
+                tracking_number=data.get('tracking_number'),
+                notes=data.get('notes')
+            )
+            if data.get('created_at'):
+                order.created_at = data.get('created_at')
+            if data.get('updated_at'):
+                order.updated_at = data.get('updated_at')
+            if data.get('payment_status'):
+                order.payment_status = data.get('payment_status')
+
+            orders.append(order)
+
+        return orders
