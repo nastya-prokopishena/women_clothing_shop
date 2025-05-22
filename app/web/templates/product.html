@@ -1,11 +1,7 @@
 {% extends "base.html" %}
 
-
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/product_page.css') }}">
-
-{# Скрипт для обробки вибору опцій товару (колір, розмір) #}
-<script src="{{ url_for('static', filename='js/product_options.js') }}"></script>
 
 <div class="product-container">
     <div class="product-gallery">
@@ -28,29 +24,24 @@
         </div>
 
         {# ФОРМА ДЛЯ ДОДАВАННЯ В КОШИК #}
-        <form method="POST" action="{{ url_for('cart_bp.add_to_cart') }}"> {# Правильний endpoint #}
-            {# Приховане поле для ID товару #}
+        <form method="POST" action="{{ url_for('cart_bp.add_to_cart') }}">
             <input type="hidden" name="product_id" value="{{ product.product_id }}">
 
             <div class="attributes">
-                {# Вибір кольору #}
                 {% if product.attributes.colors %}
                 <div class="colors">
                     <span>Кольори:</span>
                     {% for color in product.attributes.colors %}
-                        {# Радіокнопки для вибору кольору. JS має обробляти вибір через клік по label. #}
                         <input type="radio" name="color" value="{{ color }}" id="color-{{loop.index}}" {% if loop.first %}checked{% endif %} style="display:none;">
                         <label for="color-{{loop.index}}" class="color-box" style="background-color: {{ color }}" title="{{ color }}"></label>
                     {% endfor %}
                 </div>
                 {% endif %}
 
-                {# Вибір розміру #}
                 {% if product.attributes.sizes %}
                 <div class="sizes">
                     <span>Розміри:</span>
                     {% for size in product.attributes.sizes %}
-                        {# Радіокнопки для вибору розміру. JS має обробляти вибір через клік по label. #}
                         <input type="radio" name="size" value="{{ size }}" id="size-{{loop.index}}" {% if loop.first %}checked{% endif %} style="display:none;">
                         <label for="size-{{loop.index}}" class="size-button">{{ size }}</label>
                     {% endfor %}
@@ -58,10 +49,9 @@
                 {% endif %}
             </div>
 
-            {# Поле для кількості #}
             <div class="form-group" style="margin-bottom: 20px;">
                 <label for="quantity" style="display: block; margin-bottom: 8px; font-weight: 500;">Кількість:</label>
-                <input type="number" name="quantity" value="1" min="1" style="width: 70px; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                <input type="number" id="quantity" name="quantity" value="1" min="1" style="width: 70px; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
             </div>
 
             <button type="submit" class="add-to-cart">Додати в кошик</button>
@@ -101,19 +91,24 @@
             </div>
             {% endif %}
 
-            {# Форма для додавання коментаря, використовує endpoint 'add_comment' #}
-            <form class="comment-form" method="POST" action="{{ url_for('add_comment', product_id=product.product_id) }}">
+            {# Форма для додавання коментаря #}
+            <form id="comment-form" class="comment-form" method="POST" action="{{ url_for('add_comment', product_id=product.product_id) }}">
                 <div class="rating-input">
                     <span>Оцінка:</span>
                     <div class="stars">
                         {% for i in range(5, 0, -1) %}
-                            <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" required>
+                            <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}">
                             <label for="star{{ i }}" class="star">★</label>
                         {% endfor %}
                     </div>
+                    <div id="rating-warning" style="display:none; color: red; margin-top: 5px;">
+                        Будь ласка, поставте оцінку перед відправленням коментаря.
+                    </div>
                 </div>
+
                 <label for="comment" class="visually-hidden">Ваш коментар</label>
                 <textarea id="comment" name="comment" placeholder="Залишити коментар..." required></textarea>
+
                 <button type="submit">Відправити</button>
             </form>
 
