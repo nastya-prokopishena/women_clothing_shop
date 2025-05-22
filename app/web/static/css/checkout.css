@@ -125,3 +125,83 @@ select {
 .summary-item.discount span {
     color: #4CAF50; /* Колір для знижки */
 }
+
+@media (max-width: 940px) {
+    .checkout-container {
+        flex-direction: column;
+        gap: 20px;
+        margin: 20px auto;
+    }
+
+    .checkout-form,
+    .order-summary {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
+    .order-summary {
+        order: -1; /* Переміщуємо підсумок наверх */
+        margin-bottom: 20px;
+    }
+
+    .checkout-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select {
+        padding: 10px;
+        font-size: 15px;
+    }
+
+    .pay-button {
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .order-summary h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .summary-item {
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+
+    .summary-item.total {
+        font-size: 17px;
+    }
+}
+
+/* Додаткові стилі для дуже малих екранів */
+@media (max-width: 480px) {
+    .checkout-container {
+        padding: 0 10px;
+        margin: 15px auto;
+    }
+
+    .checkout-form,
+    .order-summary {
+        padding: 20px;
+    }
+
+    .checkout-title {
+        font-size: 22px;
+    }
+
+    .order-summary h2 {
+        font-size: 20px;
+    }
+
+    .pay-button {
+        padding: 10px;
+    }
+}

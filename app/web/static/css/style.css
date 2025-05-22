@@ -417,6 +417,9 @@ header {
     .reviews-grid {
         grid-template-columns: 1fr;
     }
+    .nav-links {
+        display:none;
+    }
 }
 /* Переваги */
 .advantages {
@@ -603,6 +606,160 @@ footer {
     background: #f5f5f5;
 }
 
+.burger-menu {
+    display: none;
+    cursor: pointer;
+    width: 30px;
+    height: 21px;
+    position: relative;
+    z-index: 1001;
+}
+
+.burger-menu span {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: #333;
+    border-radius: 3px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: all 0.3s ease;
+}
+
+.burger-menu span:nth-child(1) {
+    top: 0;
+}
+
+.burger-menu span:nth-child(2) {
+    top: 9px;
+}
+
+.burger-menu span:nth-child(3) {
+    top: 18px;
+}
+
+/* Анімація при активному стані */
+.burger-menu.active span:nth-child(1) {
+    top: 9px;
+    transform: rotate(45deg);
+}
+
+.burger-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu.active span:nth-child(3) {
+    top: 9px;
+    transform: rotate(-45deg);
+}
+
+/* Стилі для відкритого меню */
+.nav-links {
+    transition: all 0.5s ease;
+}
+
+.nav-links.active {
+    display: flex;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 940px) {
+    .navbar-content {
+        position: relative;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0px;
+        right: -100%;
+        width: 80%;
+        height: 100vh ;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 80px;
+        gap: 25px;
+        transition: right 0.3s ease;
+        z-index: 999;
+        display:none;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    /* Бургер-іконка */
+    .burger-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .burger-line {
+        width: 100%;
+        height: 3px;
+        background-color: #333;
+        transition: all 0.3s ease;
+    }
+
+    .burger-menu.active .burger-line:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    .burger-menu.active .burger-line:nth-child(2) {
+        opacity: 0;
+    }
+
+    .burger-menu.active .burger-line:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+    /* Кошик в меню */
+    .nav-links li a i {
+        margin-right: 8px;
+    }
+
+    .overlay-text {
+        font-size: 1.5rem;
+    }
+
+    .categories-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .category-card {
+        width: 80%;
+        margin-bottom: 15px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .product-card img {
+        height: 250px;
+    }
+
+    .categories-menu ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
 @media (max-width: 768px) {
     #featured-products-slider .product-card {
         flex: 0 0 150px;
@@ -615,4 +772,140 @@ footer {
     .featured-products {
         padding: 0 20px;
     }
+    header {
+        padding: 15px 20px;
+    }
+
+  .navbar-content {
+    position: relative;
+  }
+
+  .nav-links {
+    top: 0;
+    padding-top: 70px;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  /* Бургер-іконка */
+  .burger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  .burger-line {
+    width: 100%;
+    height: 3px;
+    background-color: #333;
+    transition: all 0.3s ease;
+  }
+
+  .burger-menu.active .burger-line:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  .burger-menu.active .burger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .burger-menu.active .burger-line:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
+  /* Герой-секція */
+  .hero {
+    height: 80vh;
+  }
+
+  .overlay-text {
+    font-size: 1.5rem;
+    padding: 0 20px;
+  }
+
+  /* Категорії */
+  .categories-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .category-card {
+    width: 80%;
+    margin-bottom: 15px;
+  }
+
+  /* Каталог */
+  .categories-menu ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+    padding: 20px 10px;
+    gap: 20px;
+  }
+
+  /* Відгуки */
+  .reviews-slider .review-card {
+    flex: 0 0 85%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nav-links {
+    gap: 15px;
+  }
+
+  .hero {
+    height: 80vh;
+  }
+
+  .overlay-text {
+    font-size: 1.8rem;
+  }
+}
+
+/* Додаткові стилі для дуже малих екранів (менше 480px) */
+@media (max-width: 480px) {
+  .hero {
+    height: 70vh;
+  }
+
+  .overlay-text {
+    font-size: 1.2rem;
+  }
+
+  .cta-button {
+    padding: 8px 16px;
+  }
+
+  .category-card {
+    width: 90%;
+    padding: 15px 20px;
+  }
+
+  #featured-products-slider .product-card {
+    flex: 0 0 120px;
+  }
+
+  #featured-products-slider .product-image {
+    height: 120px;
+  }
 }

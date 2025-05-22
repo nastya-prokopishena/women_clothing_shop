@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Магазин жіночого одягу{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart_page.css') }}">
     {% block user_css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}">
     {% endblock %}
@@ -16,7 +17,12 @@
                 <div class="logo">
                     <a href="">Жіночий Стиль</a>
                 </div>
-                <ul class="nav-links">
+                <div class="burger-menu" id="burger-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-links" id="nav-links">
                     <li><a href="{{ url_for('home') }}">Головна</a></li>
                     <li><a href="{{ url_for('catalog_all') }}">Магазин</a></li>
                     <li><a href="{{ url_for('home') }}#about">Про нас</a></li>
@@ -28,9 +34,11 @@
                         <li><a href="{{ url_for('auth.register') }}">Реєстрація</a></li>
                         <li><a href="{{ url_for('auth.login') }}">Вхід</a></li>
                     {% endif %}
-                        <li><a href="{{ url_for('cart_bp.view_cart_page') }}"><i class="fas fa-shopping-cart"></i> Кошик </a></li>                </ul>
+                    <li><a href="{{ url_for('cart_bp.view_cart_page') }}"><i class="fas fa-shopping-cart"></i> Кошик</a></li>
+                </ul>
             </div>
         </nav>
+
     </header>
 
     <main>
@@ -52,6 +60,8 @@
 
     <script src="{{ url_for('static', filename='js/product.js') }}"></script>
     <script src="{{ url_for('static', filename='js/product_slider.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/burger_menu.js') }}"></script>
+
     <script>
       window.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.alert').forEach((alert) => {

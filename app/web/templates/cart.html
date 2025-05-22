@@ -1,18 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Ваш кошик{% endblock %} {# Заголовок сторінки #}
+{% block title %}Ваш кошик{% endblock %}
 
-{# Можна додати блок extra_css, якщо є специфічні стилі для кошика, не включені в user.css #}
-{# {% block extra_css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart_page_specific.css') }}">
-{% endblock %} #}
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart_page.css') }}">
+{% endblock %}
 
 {% block content %}
-<section class="cart-section" style="padding-top: 100px; padding-bottom: 50px; max-width: 1200px; margin: auto;">
-    <div class="container"> {# Загальний контейнер для вирівнювання, якщо використовується в ваших стилях #}
-        <h1 style="text-align: center; margin-bottom: 40px; color: #5a4b3f;">Ваш кошик</h1>
+<section class="cart-section">
+    <div class="container">
+        <h1>Ваш кошик</h1>
 
-        {# Відображення flash-повідомлень (наприклад, "Товар додано", "Товар видалено") #}
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
@@ -21,48 +19,42 @@
             {% endif %}
         {% endwith %}
 
-        {# Перевірка, чи є товари в кошику #}
         {% if cart_items and cart_items|length > 0 %}
-            <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+            <table>
                 <thead>
-                    <tr style="border-bottom: 2px solid #ddd;">
-                        <th style="text-align: left; padding: 15px;">Товар</th>
-                        <th style="text-align: left; padding: 15px;"></th> {# Порожня колонка для назви/опису #}
-                        <th style="text-align: center; padding: 15px;">Ціна</th>
-                        <th style="text-align: center; padding: 15px;">Кількість</th>
-                        <th style="text-align: right; padding: 15px;">Сума</th>
-                        <th style="padding: 15px;"></th> {# Порожня колонка для кнопки видалення #}
+                    <tr>
+                        <th>Товар</th>
+                        <th></th>
+                        <th>Ціна</th>
+                        <th>Кількість</th>
+                        <th>Сума</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {# Ітерація по товарах у кошику #}
                     {% for item in cart_items %}
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <td style="padding: 15px;">
-                            <img src="{{ url_for('static', filename='images/' + (item.product_image if item.product_image else 'placeholder.jpg')) }}" alt="{{ item.product_name }}" style="width: 80px; height: auto; border-radius: 5px;">
+                    <tr>
+                        <td>
+                            <img src="{{ url_for('static', filename='images/' + (item.product_image if item.product_image else 'placeholder.jpg')) }}" alt="{{ item.product_name }}">
                         </td>
-                        <td style="padding: 15px;">
-                            <h5 style="margin: 0; font-size: 16px;">{{ item.product_name }}</h5>
+                        <td>
+                            <h5>{{ item.product_name }}</h5>
                             {% if item.size or item.color %}
-                            <p style="font-size: 14px; color: #777; margin: 5px 0 0;">
+                            <p>
                                 {% if item.size %}Розмір: {{ item.size }}{% endif %}
                                 {% if item.color %}{% if item.size %}, {% endif %}Колір: {{ item.color }}{% endif %}
                             </p>
                             {% endif %}
                         </td>
-                        <td style="text-align: center; padding: 15px; font-size: 16px;">{{ "%.2f"|format(item.price) }} грн</td>
-                        <td style="text-align: center; padding: 15px;">
-                            {# Тут буде форма для оновлення кількості #}
-                            {{ item.quantity }}
-                        </td>
-                        <td style="text-align: right; padding: 15px; font-size: 16px; font-weight: bold;">{{ "%.2f"|format(item.total_price) }} грн</td>
-                        <td style="text-align: center; padding: 15px;">
-                            {# Форма для видалення товару #}
+                        <td>{{ "%.2f"|format(item.price) }} грн</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ "%.2f"|format(item.total_price) }} грн</td>
+                        <td>
                             <form method="POST" action="{{ url_for('cart_bp.remove_from_cart') }}">
                                 <input type="hidden" name="product_id" value="{{ item.product_id }}">
                                 {% if item.size %}<input type="hidden" name="size" value="{{ item.size }}">{% endif %}
                                 {% if item.color %}<input type="hidden" name="color" value="{{ item.color }}">{% endif %}
-                                <button type="submit" class="btn-remove-item" style="background: none; border: none; color: #dc3545; font-size: 20px; cursor: pointer;" title="Видалити товар">&times;</button>
+                                <button type="submit" class="btn-remove-item" title="Видалити товар">&times;</button>
                             </form>
                         </td>
                     </tr>
@@ -70,34 +62,26 @@
                 </tbody>
             </table>
 
-            {# Підсумок кошика #}
-            <div class="cart-summary" style="max-width: 450px; margin-left: auto; background: #f9f7f4; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-                <h3 style="margin-top: 0; margin-bottom: 20px; color: #5a4b3f;">Підсумок кошика</h3>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 16px;">
+            <div class="cart-summary">
+                <h3>Підсумок кошика</h3>
+                <div>
                     <span>Проміжний підсумок:</span>
                     <span>{{ "%.2f"|format(cart_total) }} грн</span>
                 </div>
-                {# Тут можна буде додати вартість доставки, знижки тощо #}
-                <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
-                <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; color: #5a4b3f;">
+                <hr>
+                <div class="total">
                     <span>Всього:</span>
-                    <span>{{ "%.2f"|format(cart_total) }} грн</span> {# Поки що дорівнює проміжному підсумку #}
+                    <span>{{ "%.2f"|format(cart_total) }} грн</span>
                 </div>
-                {# Кнопка переходу до оформлення замовлення #}
-                <a href="{{ url_for('checkout.checkout') }}" class="btn-checkout" style="display: block; width: 100%; padding: 15px; background: #7c6f64; color: #fff; text-align: center; text-decoration: none; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; margin-top: 30px; transition: background 0.3s;">
-                    Перейти до оформлення
-                </a>
+                <a href="{{ url_for('checkout.checkout') }}" class="btn-checkout">Перейти до оформлення</a>
             </div>
 
         {% else %}
-            {# Відображається, якщо кошик порожній #}
-            <div style="text-align: center; padding: 50px 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-                <p style="font-size: 18px; color: #555; margin-bottom: 25px;">Ваш кошик порожній.</p>
-                <a href="{{ url_for('catalog_all') }}" style="padding: 12px 25px; background-color: #7c6f64; color: white; text-decoration: none; border-radius: 5px; font-size: 16px; transition: background-color 0.3s;">
-                    Перейти до каталогу
-                </a>
+            <div class="empty-cart">
+                <p>Ваш кошик порожній.</p>
+                <a href="{{ url_for('catalog_all') }}">Перейти до каталогу</a>
             </div>
         {% endif %}
-    </div> {# Кінець .container #}
+    </div>
 </section>
 {% endblock %}
